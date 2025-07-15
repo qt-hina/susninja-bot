@@ -4,7 +4,6 @@ import os
 import time
 import weakref
 import sys
-import random
 from collections import defaultdict, deque
 from typing import Dict, Optional, Set
 from datetime import datetime, timedelta
@@ -478,113 +477,88 @@ class SusNinjaBot:
             logger.error(f"❌ Failed to setup handlers: {e}")
             raise
     
-
-async def _start_command(self, message: Message) -> None:
-    """Handle /start command with inline keyboard and image"""
-    user_info = extract_user_info(message)
-    logger.info(f"🚀 /start command received from {user_info['full_name'] if user_info else 'Unknown'}")
-
-    try:
-        # Track user for broadcasting
-        if message.from_user:
-            user_ids.add(message.from_user.id)
-            logger.debug(f"👤 User {message.from_user.id} added to broadcast tracking via /start (total: {len(user_ids)})")
-
-        # Cancel broadcast mode if active
-        if message.from_user and message.from_user.id in broadcast_mode:
-            logger.info(f"🔓 Cancelling broadcast mode for user {message.from_user.id}")
-            broadcast_mode.discard(message.from_user.id)
-            if message.from_user.id in broadcast_target:
-                del broadcast_target[message.from_user.id]
-                logger.debug(f"🗑️ Removed broadcast target for user {message.from_user.id}")
-            logger.info(f"✅ Broadcast mode cancelled for {message.from_user.id}")
-            await message.reply("🔥 Broadcast mode DEACTIVATED! Your spam mission has been aborted! 📡💥", parse_mode="HTML")
-            return
-
-        logger.debug("📝 Preparing welcome message and inline keyboard")
-
-        # Build welcome caption
-        if user_info and user_info["user_id"]:
-            user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
-            welcome_text = (
-                f"🔥 <b>Yo {user_mention}, the Sus Ninja has awakened!</b>\n\n"
-                "I'm your ruthless guardian who catches all the sneaky stuff in groups! 😈\n\n"
-                "<b>My Deadly Skills:</b>\n"
-                "• 👀️ Spy on message edits like a boss\n"
-                "• 🕵️ Hunt down deleted messages\n"
-                "• ⚡ Strike faster than lightning\n"
-                "• 🤫 Operate in stealth mode (until someone acts sus)\n\n"
-                "Add me to your group and watch me expose all the sneaky behavior! 🎭"
-            )
-        else:
-            welcome_text = (
-                "🔥 <b>Yo, the Sus Ninja has awakened!</b>\n\n"
-                "I'm your ruthless guardian who catches all the sneaky stuff in groups! 😈\n\n"
-                "<b>My Deadly Skills:</b>\n"
-                "• 👀️ Spy on message edits like a boss\n"
-                "• 🕵️ Hunt down deleted messages\n"
-                "• ⚡ Strike faster than lightning\n"
-                "• 🤫 Operate in stealth mode (until someone acts sus)\n\n"
-                "Add me to your group and watch me expose all the sneaky behavior! 🎭"
-            )
-
-        # Select random image
-        image_urls = [
-            "https://i.postimg.cc/x841BwFW/New-Project-235-FFA9646.png",
-            "https://i.postimg.cc/5NC7HwSV/New-Project-235-A06-DD7-A.png",
-            "https://i.postimg.cc/HnPqpdm9/New-Project-235-9-E45-B87.png",
-            "https://i.postimg.cc/1tSPTmRg/New-Project-235-AB394-C0.png",
-            "https://i.postimg.cc/8ct1M2S7/New-Project-235-9-CAE309.png",
-            "https://i.postimg.cc/TYtwDDdt/New-Project-235-2-F658-B0.png",
-            "https://i.postimg.cc/xdwqdVfY/New-Project-235-68-BAF06.png",
-            "https://i.postimg.cc/hPczxn9t/New-Project-235-9-E9-A004.png",
-            "https://i.postimg.cc/jjFPQ1Rk/New-Project-235-A1-E7-CC1.png",
-            "https://i.postimg.cc/TPqJV0pz/New-Project-235-CA65155.png",
-            "https://i.postimg.cc/wBh0WHbb/New-Project-235-89799-CD.png",
-            "https://i.postimg.cc/FKdQ1fzk/New-Project-235-C377613.png",
-            "https://i.postimg.cc/rpKqWnnm/New-Project-235-CFD2548.png",
-            "https://i.postimg.cc/g0kn7HMF/New-Project-235-C4-A32-AC.png",
-            "https://i.postimg.cc/XY6jRkY1/New-Project-235-28-DCBC9.png",
-            "https://i.postimg.cc/SN32J9Nc/New-Project-235-99-D1478.png",
-            "https://i.postimg.cc/8C86n62T/New-Project-235-F1556-B9.png",
-            "https://i.postimg.cc/RCGwVqHT/New-Project-235-5-BBB339.png",
-            "https://i.postimg.cc/pTfYBZyN/New-Project-235-17-D796-A.png",
-            "https://i.postimg.cc/zGgdgJJc/New-Project-235-165-FE5-A.png"
-        ]
-        random_image = random.choice(image_urls)
-
-        # Create inline keyboard
-        builder = InlineKeyboardBuilder()
-        builder.row(
-            InlineKeyboardButton(text="Updates", url=CHANNEL_URL),
-            InlineKeyboardButton(text="Support", url=GROUP_URL)
-        )
-        bot_info = await self.bot.get_me()
-        builder.row(
-            InlineKeyboardButton(
-                text="Add Me To Your Group",
-                url=f"https://t.me/{bot_info.username}?startgroup=true"
-            )
-        )
-
-        # Send photo with caption and buttons in one message
-        await message.reply_photo(
-            photo=random_image,
-            caption=welcome_text,
-            parse_mode="HTML",
-            reply_markup=builder.as_markup()
-        )
-        logger.info(f"✅ Sent welcome image + message to {user_info['user_id'] if user_info else 'unknown'}")
-
-    except Exception as e:
-        logger.error(f"❌ Error in /start command: {e}")
-        logger.error(f"🔧 User details: {user_info}")
+    async def _start_command(self, message: Message) -> None:
+        """Handle /start command with inline keyboard"""
+        user_info = extract_user_info(message)
+        logger.info(f"🚀 /start command received from {user_info['full_name'] if user_info else 'Unknown'}")
+        
         try:
-            await message.reply("💥 Oops! Something just broke in my circuits. Try again and maybe I won't explode this time! 🤖⚡")
-        except Exception as reply_error:
-            logger.error(f"❌ Failed to send error message: {reply_error}")
-    
-#help handler
+            # Track user for broadcasting when they use commands
+            if message.from_user:
+                user_ids.add(message.from_user.id)
+                logger.debug(f"👤 User {message.from_user.id} added to broadcast tracking via /start (total: {len(user_ids)})")
+            # Check if user was in broadcast mode and cancel it
+            if message.from_user and message.from_user.id in broadcast_mode:
+                logger.info(f"🔓 Cancelling broadcast mode for user {message.from_user.id}")
+                broadcast_mode.discard(message.from_user.id)
+                if message.from_user.id in broadcast_target:
+                    del broadcast_target[message.from_user.id]
+                    logger.debug(f"🗑️ Removed broadcast target for user {message.from_user.id}")
+                logger.info(f"✅ Broadcast mode cancelled for {message.from_user.id}")
+                await message.reply("🔥 Broadcast mode DEACTIVATED! Your spam mission has been aborted! 📡💥", parse_mode="HTML")
+                return
+            
+            logger.debug("📝 Preparing welcome message and inline keyboard")
+            if user_info and user_info["user_id"]:
+                user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
+                welcome_text = (
+                    f"🔥 <b>Yo {user_mention}, the Sus Ninja has awakened!</b>\n\n"
+                    "I'm your ruthless guardian who catches all the sneaky stuff in groups! 😈\n\n"
+                    "<b>My Deadly Skills:</b>\n"
+                    "• 👀️ Spy on message edits like a boss\n"
+                    "• 🕵️ Hunt down deleted messages\n"
+                    "• ⚡ Strike faster than lightning\n"
+                    "• 🤫 Operate in stealth mode (until someone acts sus)\n\n"
+                    "Add me to your group and watch me expose all the sneaky behavior! 🎭"
+                )
+            else:
+                welcome_text = (
+                    "🔥 <b>Yo, the Sus Ninja has awakened!</b>\n\n"
+                    "I'm your ruthless guardian who catches all the sneaky stuff in groups! 😈\n\n"
+                    "<b>My Deadly Skills:</b>\n"
+                    "• 👀️ Spy on message edits like a boss\n"
+                    "• 🕵️ Hunt down deleted messages\n"
+                    "• ⚡ Strike faster than lightning\n"
+                    "• 🤫 Operate in stealth mode (until someone acts sus)\n\n"
+                    "Add me to your group and watch me expose all the sneaky behavior! 🎭"
+                )
+            
+            # Create inline keyboard with specified layout
+            logger.debug("🎨 Creating inline keyboard buttons")
+            builder = InlineKeyboardBuilder()
+            
+            # First row - 2 buttons
+            builder.row(
+                InlineKeyboardButton(text="Updates", url=CHANNEL_URL),
+                InlineKeyboardButton(text="Support", url=GROUP_URL)
+            )
+            logger.debug("✅ First row buttons added (Updates & Support)")
+            
+            # Second row - 1 button
+            logger.debug("🔍 Getting bot username for group invitation link")
+            bot_info = await self.bot.get_me()
+            logger.debug(f"🤖 Bot username: @{bot_info.username}")
+            
+            builder.row(
+                InlineKeyboardButton(
+                    text="Add Me To Your Group", 
+                    url=f"https://t.me/{bot_info.username}?startgroup=true"
+                )
+            )
+            logger.debug("✅ Second row button added (Add to Group)")
+            
+            logger.info(f"📤 Sending welcome message to {user_info['full_name'] if user_info else 'user'}")
+            await message.reply(welcome_text, reply_markup=builder.as_markup(), parse_mode="HTML")
+            logger.info(f"✅ Welcome message sent successfully to {user_info['user_id'] if user_info else 'unknown'}")
+            
+        except Exception as e:
+            logger.error(f"❌ Error in /start command: {e}")
+            logger.error(f"🔧 User details: {user_info}")
+            try:
+                await message.reply("💥 Oops! Something just broke in my circuits. Try again and maybe I won't explode this time! 🤖⚡")
+                logger.info("📤 Error message sent to user")
+            except Exception as reply_error:
+                logger.error(f"❌ Failed to send error message: {reply_error}")
     
     async def _help_command(self, message: Message) -> None:
         """Handle /help command"""
