@@ -237,7 +237,7 @@ logger.info("🥷 Sus Ninja Bot starting up - loading configuration")
 logger.info("⚙️ Loading bot configuration settings")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
 CHANNEL_URL = "https://t.me/WorkGlows"
-GROUP_URL = "https://t.me/SoulMeetsHQ"
+GROUP_URL = "https://t.me/TheCryptoElders"
 logger.info(f"🔗 Channel URL set: {CHANNEL_URL}")
 logger.info(f"🔗 Group URL set: {GROUP_URL}")
 
@@ -619,45 +619,40 @@ class SusNinjaBot:
                 logger.error(f"❌ Failed to send error message: {reply_error}")
     
     async def _ping_command(self, message: Message) -> None:
-    """Handle /ping command"""
-    user_info = extract_user_info(message)
-    logger.info(f"🏓 /ping command received from {user_info['full_name'] if user_info else 'Unknown'}")
-
-    try:
-        # Track user for broadcasting when they use commands
-        if message.from_user:
-            user_ids.add(message.from_user.id)
-            logger.debug(f"👤 User {message.from_user.id} added to broadcast tracking via /ping (total: {len(user_ids)})")
+        """Handle /ping command"""
+        user_info = extract_user_info(message)
+        logger.info(f"🏓 /ping command received from {user_info['full_name'] if user_info else 'Unknown'}")
         
-        logger.debug("⏱️ Starting ping response timer")
-        start_time = time.time()
-
-        # Get bot info for status
-        logger.debug("🔍 Fetching bot information for status check")
-        bot_info = await self.bot.get_me()
-        response_time = round((time.time() - start_time) * 1000, 2)
-        logger.info(f"⚡ Bot response time calculated: {response_time}ms")
-
-        status_text = (
-            f'🏓 <a href="{GROUP_URL}">Pong!</a> {response_time}ms'
-        )
-
-        logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
-        await message.reply(
-            status_text,
-            parse_mode="HTML",
-            disable_web_page_preview=True
-        )
-        logger.info(f"✅ Ping response sent successfully ({response_time}ms) to {user_info['user_id'] if user_info else 'unknown'}")
-
-    except Exception as e:
-        logger.error(f"❌ Error in /ping command: {e}")
-        logger.error(f"🔧 User details: {user_info}")
         try:
-            await message.reply("💥 BOOM! I'm alive but something just exploded in my circuits! 🤖⚡")
-            logger.info("📤 Error ping response sent to user")
-        except Exception as reply_error:
-            logger.error(f"❌ Failed to send error ping response: {reply_error}")
+            # Track user for broadcasting when they use commands
+            if message.from_user:
+                user_ids.add(message.from_user.id)
+                logger.debug(f"👤 User {message.from_user.id} added to broadcast tracking via /ping (total: {len(user_ids)})")
+            logger.debug("⏱️ Starting ping response timer")
+            start_time = time.time()
+            
+            # Get bot info for status
+            logger.debug("🔍 Fetching bot information for status check")
+            bot_info = await self.bot.get_me()
+            response_time = round((time.time() - start_time) * 1000, 2)
+            logger.info(f"⚡ Bot response time calculated: {response_time}ms")
+            
+            status_text = (
+                f'💥 <a href="{GROUP_URL}">BOOM!</a> I responded in {response_time}ms - faster than your reflexes! 😎'
+            )
+            
+            logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
+            await message.reply(status_text, parse_mode="HTML")
+            logger.info(f"✅ Ping response sent successfully ({response_time}ms) to {user_info['user_id'] if user_info else 'unknown'}")
+            
+        except Exception as e:
+            logger.error(f"❌ Error in /ping command: {e}")
+            logger.error(f"🔧 User details: {user_info}")
+            try:
+                await message.reply("💥 BOOM! I'm alive but something just exploded in my circuits! 🤖⚡")
+                logger.info("📤 Error ping response sent to user")
+            except Exception as reply_error:
+                logger.error(f"❌ Failed to send error ping response: {reply_error}")
     
     async def _broadcast_command(self, message: Message) -> None:
         """Handle broadcast command (owner only)"""
@@ -877,7 +872,7 @@ class SusNinjaBot:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="👀️", 
+                        text="👁️👄👁️", 
                         callback_data=f"reveal_edit:{message_id}:{user.id}"
                     ),
                     InlineKeyboardButton(
@@ -1185,7 +1180,7 @@ class SusNinjaBot:
                                 f"📝 <b>Message Edited</b> by {edit_data['editor_mention']}\n"
                                 f"<i>Click Reveal to see the changes</i>"
                             )
-                            new_button_text = "👀️"
+                            new_button_text = "👁️👄👁️"
                         else:
                             # Show the edit details
                             new_text = (
