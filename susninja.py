@@ -638,12 +638,16 @@ class SusNinjaBot:
             logger.info(f"⚡ Bot response time calculated: {response_time}ms")
             
             status_text = (
-                f'🏓 <a href="{GROUP_URL}">Pong!</a> {response_time}ms'
-            )
-            
-            logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
-            await message.reply(status_text, parse_mode="HTML")
-            logger.info(f"✅ Ping response sent successfully ({response_time}ms) to {user_info['user_id'] if user_info else 'unknown'}")
+    f'🏓 <a href="{GROUP_URL}">Pong!</a> {response_time}ms'
+)
+
+logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
+await message.reply(
+    status_text,
+    parse_mode="HTML",
+    disable_web_page_preview=True
+)
+logger.info(f"✅ Ping response sent successfully ({response_time}ms) to {user_info['user_id'] if user_info else 'unknown'}")
             
         except Exception as e:
             logger.error(f"❌ Error in /ping command: {e}")
