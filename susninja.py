@@ -638,7 +638,7 @@ class SusNinjaBot:
             logger.info(f"⚡ Bot response time calculated: {response_time}ms")
             
             status_text = (
-                f'💥 <a href="{GROUP_URL}">Pong!</a> {response_time}ms'
+                f'🏓 <a href="{GROUP_URL}">Pong!</a> {response_time}ms'
             )
             
             logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
