@@ -618,7 +618,7 @@ class SusNinjaBot:
             except Exception as reply_error:
                 logger.error(f"❌ Failed to send error message: {reply_error}")
     
-    async def _ping_command(self, message: Message) -> None:
+	async def _ping_command(self, message: Message) -> None:
     """Handle /ping command"""
     user_info = extract_user_info(message)
     logger.info(f"🏓 /ping command received from {user_info['full_name'] if user_info else 'Unknown'}")
