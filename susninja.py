@@ -501,27 +501,33 @@ class SusNinjaBot:
             logger.debug("📝 Preparing welcome message and inline keyboard")
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
-                welcome_text = (
-    				f"💖 <b>Hey {user_mention}, your Sus Ninja just woke up!</b>\n\n"
-				    "I’m your cheeky guardian watching all the sneaky moves! 💕\n\n"
- 				   "<b>My Lovely Skills:</b>\n"
- 				   "• 👀 Spy on message edits like a pro\n"
-				    "• 🕵️ Find those deleted secrets\n"
-				    "• ⚡ Strike quick with love and style\n"
-				    "• 🤫 Stay stealthy until someone acts sus\n\n"
- 				   "Add me to your group and let me catch all the sneaky fun! 🎭"
-				)
+                welcome_text = f"""
+💖 <b>Hey {user_mention}, your Sus Ninja just woke up!</b>
+
+I’m your cheeky guardian watching all the sneaky moves! 💕  
+
+<b>My Lovely Skills:</b>
+• 👀 Spy on message edits like a pro  
+• 🕵️ Find those deleted secrets  
+• ⚡ Strike quick with love and style  
+• 🤫 Stay stealthy until someone acts sus  
+
+Add me to your group and let me catch all the sneaky fun! 🎭
+"""
             else:
-                welcome_text = (
-    				"💖 <b>Hey babe, the Sus Ninja is awake!</b>\n\n"
-				    "I’m your cheeky guardian watching all the sneaky moves! 💕\n\n"
- 				   "<b>My Lovely Skills:</b>\n"
- 				   "• 👀 Spy on message edits like a pro\n"
-				    "• 🕵️ Find those deleted secrets\n"
-				    "• ⚡ Strike quick with love and style\n"
-				    "• 🤫 Stay stealthy until someone acts sus\n\n"
- 				   "Add me to your group and let me catch all the sneaky fun! 🎭"
-				)
+                welcome_text = """
+💖 <b>Hey babe, the Sus Ninja is awake!</b>
+
+I’m your cheeky guardian watching all the sneaky moves! 💕
+
+<b>My Lovely Skills:</b>
+• 👀 Spy on message edits like a pro  
+• 🕵️ Find those deleted secrets  
+• ⚡ Strike quick with love and style  
+• 🤫 Stay stealthy until someone acts sus  
+
+Add me to your group and let me catch all the sneaky fun! 🎭
+"""
             
             # Create inline keyboard with specified layout
             logger.debug("🎨 Creating inline keyboard buttons")
