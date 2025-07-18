@@ -502,23 +502,23 @@ class SusNinjaBot:
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 welcome_text = f"""
-💖 <b>Hey {user_mention}, Welcome!</b>
+💖 <b>Hey {user_mention}, welcome aboard!</b>
 
-💓 I'm here to keep an eye on message edits.
+💓 I’m your sweet little spy for message edits.
 
-<blockquote>I track all edited messages in the group 💘</blockquote>
+<blockquote>Every time someone edits a message, I catch it 💘</blockquote>
 
-💌 Add me to your group and I’ll handle the rest!
+<i>💌 Just add me to your group and I’ll take care of the rest!</i>
 """
             else:
                 welcome_text = f"""
-💖 <b>Hey Sweetie, Welcome!</b>
+💖 <b>Hey cutie, welcome aboard!</b>
 
-💓 I'm here to keep an eye on message edits.
+💓 I’m your sweet little spy for message edits.
 
-<blockquote>I track all edited messages in the group 💘</blockquote>
+<blockquote>Every time someone edits a message, I catch it 💘</blockquote>
 
-💌 Add me to your group and I’ll handle the rest!
+<i>💌 Just add me to your group and I’ll take care of the rest!</i>
 """
             
             # Create inline keyboard with specified layout
@@ -575,30 +575,28 @@ class SusNinjaBot:
 💖 <b>Hey {user_mention}, need help?</b>
 
 <blockquote>💘 Here’s what I can do:
-├─ <b>/start</b> – Wake me up 💫  
-├─ <b>/help</b> – Show this guide 💌  
-└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
-
+├─ <b>/start</b> – Wake me up   
+├─ <b>/help</b> – Show this guide  
+└─ <b>/ping</b> – Check if I’m alive</blockquote>  
 <blockquote>📖 How I work:
-├─ Add me to your group 💕  
-├─ Make me admin 💪  
-├─ I watch everything quietly 👀  
-└─ Someone acts sus? I’ll let you know 🫢</blockquote>
+├─ Add me to your group  
+├─ Make me admin 
+├─ I watch everything quietly  
+└─ Someone acts sus? I’ll let you know</blockquote>
 """
             else:
                 help_text_basic = f"""
 💖 <b>Hey there cutie, need help?</b>
 
 <blockquote>💘 Here’s what I can do:
-├─ <b>/start</b> – Wake me up 💫  
-├─ <b>/help</b> – Show this guide 💌  
-└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
-
+├─ <b>/start</b> – Wake me up 
+├─ <b>/help</b> – Show this guide   
+└─ <b>/ping</b> – Check if I’m alive</blockquote>  
 <blockquote>📖 How I work:
-├─ Add me to your group 💕  
-├─ Make me admin 💪  
-├─ I watch everything quietly 👀  
-└─ Someone acts sus? I’ll let you know 🫢</blockquote>
+├─ Add me to your group   
+├─ Make me admin 
+├─ I watch everything quietly   
+└─ Someone acts sus? I’ll let you know</blockquote>
 """
             
             # Create inline keyboard with expand button
@@ -1023,20 +1021,20 @@ class SusNinjaBot:
 💖 <b>Sus Ninja Manual for {user_mention}</b>
 
 <blockquote><b>📦 Basic Commands:</b>
-├─ 💞 /start – Wake me up  
-├─ 💕 /help – This spicy guide  
-└─ 💫 /ping – Check my heartbeat</blockquote>
+├─ /start – Wake me up  
+├─ /help – This spicy guide  
+└─ /ping – Check my heartbeat</blockquote>
 
 <blockquote><b>👥 Group Setup:</b>
-├─ 🤫 Add me to your group  
-├─ 👑 Make me admin  
-├─ 👀 I’ll quietly watch everything  
-└─ 💥 Caught? I expose it</blockquote>
+├─ Add me to your group  
+├─ Make me admin  
+├─ I’ll quietly watch everything  
+└─ Caught? I expose it</blockquote>
 
 <blockquote><b>📖 What I Do:</b>
-├─ ✏️ Catch edited messages  
-├─ 📊 Remember everything  
-└─ ⚡ React super fast</blockquote>
+├─ Catch edited messages  
+├─ Remember everything  
+└─ React super fast</blockquote>
 
 Need help? Just tap in 💖
 """
@@ -1045,20 +1043,20 @@ Need help? Just tap in 💖
 💖 <b>Sus Ninja Manual for you!</b>
 
 <blockquote><b>📦 Basic Commands:</b>
-├─ 💞 /start – Wake me up  
-├─ 💕 /help – This spicy guide  
-└─ 💫 /ping – Check my heartbeat</blockquote>
+├─ /start – Wake me up  
+├─ /help – This spicy guide  
+└─ /ping – Check my heartbeat</blockquote>
 
 <blockquote><b>👥 Group Setup:</b>
-├─ 🤫 Add me to your group  
-├─ 👑 Make me admin  
-├─ 👀 I’ll quietly watch everything  
-└─ 💥 Caught? I expose it</blockquote>
+├─ Add me to your group  
+├─ Make me admin  
+├─ I’ll quietly watch everything  
+└─ Caught? I expose it</blockquote>
 
 <blockquote><b>📖 What I Do:</b>
-├─ ✏️ Catch edited messages  
-├─ 📊 Remember everything  
-└─ ⚡ React super fast</blockquote>
+├─ Catch edited messages  
+├─ Remember everything  
+└─ React super fast</blockquote>
 
 Need help? Just tap in 💖
 """
@@ -1100,30 +1098,30 @@ Need help? Just tap in 💖
 💖 <b>Hey {user_mention}, need help?</b>
 
 <blockquote>💘 Here’s what I can do:
-├─ <b>/start</b> – Wake me up 💫  
-├─ <b>/help</b> – Show this guide 💌  
-└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
+├─ <b>/start</b> – Wake me up   
+├─ <b>/help</b> – Show this guide  
+└─ <b>/ping</b> – Check if I’m alive</blockquote>  
 
 <blockquote>📖 How I work:
-├─ Add me to your group 💕  
-├─ Make me admin 💪  
-├─ I watch everything quietly 👀  
-└─ Someone acts sus? I’ll let you know 🫢</blockquote>
+├─ Add me to your group   
+├─ Make me admin 
+├─ I watch everything quietly   
+└─ Someone acts sus? I’ll let you know</blockquote>
 """
             else:
                 help_text_basic = f"""
 💖 <b>Hey there cutie, need help?</b>
 
 <blockquote>💘 Here’s what I can do:
-├─ <b>/start</b> – Wake me up 💫  
-├─ <b>/help</b> – Show this guide 💌  
-└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
+├─ <b>/start</b> – Wake me up  
+├─ <b>/help</b> – Show this guide   
+└─ <b>/ping</b> – Check if I’m alive</blockquote>  
 
 <blockquote>📖 How I work:
-├─ Add me to your group 💕  
-├─ Make me admin 💪  
-├─ I watch everything quietly 👀  
-└─ Someone acts sus? I’ll let you know 🫢</blockquote>
+├─ Add me to your group  
+├─ Make me admin 
+├─ I watch everything quietly 
+└─ Someone acts sus? I’ll let you know</blockquote>
 """
             
             # Create expand button
