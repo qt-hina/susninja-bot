@@ -237,7 +237,7 @@ logger.info("🥷 Sus Ninja Bot starting up - loading configuration")
 logger.info("⚙️ Loading bot configuration settings")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
 CHANNEL_URL = "https://t.me/WorkGlows"
-GROUP_URL = "https://t.me/TheCryptoElders"
+GROUP_URL = "https://t.me/SoulMeetsHQ"
 logger.info(f"🔗 Channel URL set: {CHANNEL_URL}")
 logger.info(f"🔗 Group URL set: {GROUP_URL}")
 
@@ -495,33 +495,33 @@ class SusNinjaBot:
                     del broadcast_target[message.from_user.id]
                     logger.debug(f"🗑️ Removed broadcast target for user {message.from_user.id}")
                 logger.info(f"✅ Broadcast mode cancelled for {message.from_user.id}")
-                await message.reply("🔥 Broadcast mode DEACTIVATED! Your spam mission has been aborted! 📡💥", parse_mode="HTML")
+                await message.reply("🌷 Broadcast’s off! Spam mission canceled, sweetie! 📡💥", parse_mode="HTML")
                 return
             
             logger.debug("📝 Preparing welcome message and inline keyboard")
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 welcome_text = (
-                    f"🔥 <b>Yo {user_mention}, the Sus Ninja has awakened!</b>\n\n"
-                    "I'm your ruthless guardian who catches all the sneaky stuff in groups! 😈\n\n"
-                    "<b>My Deadly Skills:</b>\n"
-                    "• 👀️ Spy on message edits like a boss\n"
-                    "• 🕵️ Hunt down deleted messages\n"
-                    "• ⚡ Strike faster than lightning\n"
-                    "• 🤫 Operate in stealth mode (until someone acts sus)\n\n"
-                    "Add me to your group and watch me expose all the sneaky behavior! 🎭"
-                )
+    				f"💖 <b>Hey {user_mention}, your Sus Ninja just woke up!</b>\n\n"
+				    "I’m your cheeky guardian watching all the sneaky moves! 💕\n\n"
+ 				   "<b>My Lovely Skills:</b>\n"
+ 				   "• 👀 Spy on message edits like a pro\n"
+				    "• 🕵️ Find those deleted secrets\n"
+				    "• ⚡ Strike quick with love and style\n"
+				    "• 🤫 Stay stealthy until someone acts sus\n\n"
+ 				   "Add me to your group and let me catch all the sneaky fun! 🎭"
+				)
             else:
                 welcome_text = (
-                    "🔥 <b>Yo, the Sus Ninja has awakened!</b>\n\n"
-                    "I'm your ruthless guardian who catches all the sneaky stuff in groups! 😈\n\n"
-                    "<b>My Deadly Skills:</b>\n"
-                    "• 👀️ Spy on message edits like a boss\n"
-                    "• 🕵️ Hunt down deleted messages\n"
-                    "• ⚡ Strike faster than lightning\n"
-                    "• 🤫 Operate in stealth mode (until someone acts sus)\n\n"
-                    "Add me to your group and watch me expose all the sneaky behavior! 🎭"
-                )
+    				"💖 <b>Hey babe, the Sus Ninja is awake!</b>\n\n"
+				    "I’m your cheeky guardian watching all the sneaky moves! 💕\n\n"
+ 				   "<b>My Lovely Skills:</b>\n"
+ 				   "• 👀 Spy on message edits like a pro\n"
+				    "• 🕵️ Find those deleted secrets\n"
+				    "• ⚡ Strike quick with love and style\n"
+				    "• 🤫 Stay stealthy until someone acts sus\n\n"
+ 				   "Add me to your group and let me catch all the sneaky fun! 🎭"
+				)
             
             # Create inline keyboard with specified layout
             logger.debug("🎨 Creating inline keyboard buttons")
@@ -555,7 +555,7 @@ class SusNinjaBot:
             logger.error(f"❌ Error in /start command: {e}")
             logger.error(f"🔧 User details: {user_info}")
             try:
-                await message.reply("💥 Oops! Something just broke in my circuits. Try again and maybe I won't explode this time! 🤖⚡")
+                await message.reply("🌷 Oops! My circuits glitched. Try again, please! ⚡")
                 logger.info("📤 Error message sent to user")
             except Exception as reply_error:
                 logger.error(f"❌ Failed to send error message: {reply_error}")
@@ -574,30 +574,30 @@ class SusNinjaBot:
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_basic = (
-                    f"🤖 <b>Sus Ninja Manual for {user_mention}</b>\n\n"
-                    "<b>My Arsenal:</b>\n"
-                    "• <code>/start</code> - Wake up the beast 😈\n"
-                    "• <code>/help</code> - Get this epic guide\n"
-                    "• <code>/ping</code> - Check if I'm still alive\n\n"
-                    "<b>How I dominate your group:</b>\n"
-                    "1. Drag me into your group like a boss\n"
-                    "2. Give me admin powers (I need them to be lethal)\n"
-                    "3. I'll lurk in the shadows watching everything\n"
-                    "4. The moment someone tries to be sneaky, BAM! 💥 Exposed!"
-                )
+    				f"💖 <b>Sus Ninja Manual for {user_mention}</b>\n\n"
+				    "<b>My Arsenal:</b>\n"
+				    "• <code>/start</code> - Wake up your fierce ninja baby 🔥\n"
+				    "• <code>/help</code> - Peek at my secret moves 💕\n"
+				    "• <code>/ping</code> - Check if I’m still buzzing for you 💫\n\n"
+				    "<b>How I own your group:</b>\n"
+				    "1. Drag me in and let’s get cozy 😘\n"
+				    "2. Give me admin powers to play hard 👑\n"
+				    "3. I’ll lurk and watch every naughty move 👀\n"
+				    "4. Someone’s sneaky? BAM! Secrets out! 💥"
+				)
             else:
                 help_text_basic = (
-                    "🤖 <b>Sus Ninja Manual</b>\n\n"
-                    "<b>My Arsenal:</b>\n"
-                    "• <code>/start</code> - Wake up the beast 😈\n"
-                    "• <code>/help</code> - Get this epic guide\n"
-                    "• <code>/ping</code> - Check if I'm still alive\n\n"
-                    "<b>How I dominate your group:</b>\n"
-                    "1. Drag me into your group like a boss\n"
-                    "2. Give me admin powers (I need them to be lethal)\n"
-                    "3. I'll lurk in the shadows watching everything\n"
-                    "4. The moment someone tries to be sneaky, BAM! 💥 Exposed!"
-                )
+    				"💖 <b>Sus Ninja Manual</b>\n\n"
+				    "<b>My Arsenal:</b>\n"
+				    "• <code>/start</code> - Wake up your fierce ninja baby 🔥\n"
+				    "• <code>/help</code> - Peek at my secret moves 💕\n"
+				    "• <code>/ping</code> - Check if I’m still buzzing for you 💫\n\n"
+				    "<b>How I own your group:</b>\n"
+				    "1. Drag me in and let’s get cozy 😘\n"
+				    "2. Give me admin powers to play hard 👑\n"
+				    "3. I’ll lurk and watch every naughty move 👀\n"
+				    "4. Someone’s sneaky? BAM! Secrets out! 💥"
+				)
             
             # Create inline keyboard with expand button
             builder = InlineKeyboardBuilder()
@@ -613,7 +613,7 @@ class SusNinjaBot:
             logger.error(f"❌ Error in /help command: {e}")
             logger.error(f"🔧 User details: {user_info}")
             try:
-                await message.reply("💥 My help system just crashed! Give me a sec to reboot and try again! 🔧🤖")
+                await message.reply("🌷 Uh oh! Help system crashed! Trying to fix it! 🔧")
                 logger.info("📤 Error message sent to user")
             except Exception as reply_error:
                 logger.error(f"❌ Failed to send error message: {reply_error}")
@@ -638,7 +638,7 @@ class SusNinjaBot:
             logger.info(f"⚡ Bot response time calculated: {response_time}ms")
             
             status_text = (
-                f'💥 <a href="{GROUP_URL}">BOOM!</a> I responded in {response_time}ms - faster than your reflexes! 😎'
+                f'🏓 <a href="{GROUP_URL}">Pong!</a> {response_time}ms'
             )
             
             logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
@@ -649,7 +649,7 @@ class SusNinjaBot:
             logger.error(f"❌ Error in /ping command: {e}")
             logger.error(f"🔧 User details: {user_info}")
             try:
-                await message.reply("💥 BOOM! I'm alive but something just exploded in my circuits! 🤖⚡")
+                await message.reply("🏓 Pong! I'm alive!")
                 logger.info("📤 Error ping response sent to user")
             except Exception as reply_error:
                 logger.error(f"❌ Failed to send error ping response: {reply_error}")
@@ -699,7 +699,7 @@ class SusNinjaBot:
             logger.error(f"❌ Error in /broadcast command: {e}")
             logger.error(f"🔧 User details: {user_info}")
             try:
-                await message.reply("💥 My broadcast system just had a meltdown! Give me a moment to fix this chaos! 📡🔥")
+                await message.reply("🌷 Uh oh! Broadcast system had a meltdown! Hang tight! 📡🔥")
                 logger.info("📤 Error message sent to user")
             except Exception as reply_error:
                 logger.error(f"❌ Failed to send error message: {reply_error}")
@@ -862,8 +862,7 @@ class SusNinjaBot:
             
             # Create initial notification (hidden by default)
             edit_notification = (
-                f"📝 <b>Message Edited</b> by {user_mention}\n"
-                f"<i>Click Reveal to see the changes</i>"
+                f"📝 <b>Message Edited</b> by <b>{user_mention}</b>\n"
             )
             
             # Create inline keyboard with Reveal/Hide and Dismiss buttons
@@ -872,7 +871,7 @@ class SusNinjaBot:
             keyboard = InlineKeyboardMarkup(inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="👁️👄👁️", 
+                        text="👀️", 
                         callback_data=f"reveal_edit:{message_id}:{user.id}"
                     ),
                     InlineKeyboardButton(
@@ -933,11 +932,11 @@ class SusNinjaBot:
             for new_member in message.new_chat_members:
                 if new_member.id == bot_info.id:
                     welcome_msg = (
-                        "👋 Thanks for adding Sus Ninja Bot Bot!\n\n"
-                        "I'm now monitoring this group for message deletions and edits.\n\n"
-                        "Important: Make sure I have admin permissions to function properly.\n\n"
-                        "Type /help for more information!"
-                    )
+						"👋 Hey there! Thanks for adding Sus Ninja!\n\n"
+						"I’m now watching your group for sneaky deletes and edits.\n\n"
+						"Important: Give me admin powers so I can do my magic! 💖\n\n"
+						"Type /help to see all my naughty tricks!"
+					)
                     
                     await message.reply(welcome_msg, parse_mode="Markdown")
                     self.active_chats.add(message.chat.id)
@@ -1019,52 +1018,52 @@ class SusNinjaBot:
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_expanded = (
-                    f"🤖 <b>Sus Ninja Manual for {user_mention}</b>\n\n"
-                    "<b>My Arsenal:</b>\n"
-                    "• /start - Wake up the beast 😈\n"
-                    "• /help - Get this epic guide\n"
-                    "• /ping - Check if I'm still alive\n\n"
-                    "<b>How I dominate your group:</b>\n"
-                    "1. Drag me into your group like a boss\n"
-                    "2. Give me admin powers (I need them to be lethal)\n"
-                    "3. I'll lurk in the shadows watching everything\n"
-                    "4. The moment someone tries to be sneaky, BAM! 💥 Exposed!\n\n"
-                    "<b>My Deadly Powers:</b>\n"
-                    "• 👀️ I'm watching you... always\n"
-                    "• 🚨 Catch sus behavior instantly\n"
-                    "• 📊 Remember EVERYTHING you said\n"
-                    "• ⚡ Faster than your excuses\n\n"
-                    "<b>Advanced Warfare:</b>\n"
-                    "• 🔄 Track every single edit you make\n"
-                    "• 🗑️ Expose your deleted messages\n"
-                    "• 📈 Monitor my own performance like a pro\n"
-                    "• 🛡️ Operate in stealth mode until you mess up\n\n"
-                    "Need backup? Join our squad for epic support! 🔥"
-                )
+					f"💖 <b>Sus Ninja Manual for {user_mention}</b>\n\n"
+					"<b>My Arsenal:</b>\n"
+					"• /start - Wake your fierce Sus Ninja 💞\n"
+					"• /help - Grab this sexy guide 💕\n"
+					"• /ping - Check if I’m ready 💫\n\n"
+					"<b>How I rule your group:</b>\n"
+					"1. Drag me in, let’s get cozy 🤫\n"
+					"2. Give me admin powers to tease 👑\n"
+					"3. I watch silently, catching all 👀\n"
+					"4. Sneaky? BAM! Secrets spilled 💥\n\n"
+					"<b>My Powers:</b>\n"
+					"• 👁️ Always watching you\n"
+					"• 🚨 Catch sus instantly\n"
+					"• 📊 Remember EVERYTHING\n"
+					"• ⚡ Faster than excuses\n\n"
+					"<b>Advanced Moves:</b>\n"
+					"• 🔄 Track every edit\n"
+					"• 🗑️ Expose deleted msgs\n"
+					"• 📈 Monitor performance\n"
+					"• 🛡️ Stealth until slip\n\n"
+					"Need backup? Join us for epic support! 💖"
+				)
             else:
                 help_text_expanded = (
-                    "🤖 <b>Sus Ninja Manual</b>\n\n"
-                    "<b>My Arsenal:</b>\n"
-                    "• /start - Wake up the beast 😈\n"
-                    "• /help - Get this epic guide\n"
-                    "• /ping - Check if I'm still alive\n\n"
-                    "<b>How I dominate your group:</b>\n"
-                    "1. Drag me into your group like a boss\n"
-                    "2. Give me admin powers (I need them to be lethal)\n"
-                    "3. I'll lurk in the shadows watching everything\n"
-                    "4. The moment someone tries to be sneaky, BAM! 💥 Exposed!\n\n"
-                    "<b>My Deadly Powers:</b>\n"
-                    "• 👁️ I'm watching you... always\n"
-                    "• 🚨 Catch sus behavior instantly\n"
-                    "• 📊 Remember EVERYTHING you said\n"
-                    "• ⚡ Faster than your excuses\n\n"
-                    "<b>Advanced Warfare:</b>\n"
-                    "• 🔄 Track every single edit you make\n"
-                    "• 🗑️ Expose your deleted messages\n"
-                    "• 📈 Monitor my own performance like a pro\n"
-                    "• 🛡️ Operate in stealth mode until you mess up\n\n"
-                    "Need backup? Join our squad for epic support! 🔥"
-                )
+					"💖 <b>Sus Ninja Manual</b>\n\n"
+					"<b>My Arsenal:</b>\n"
+					"• /start - Wake your fierce Sus Ninja 💞\n"
+					"• /help - Grab this sexy guide 💕\n"
+					"• /ping - Check if I’m ready 💫\n\n"
+					"<b>How I rule your group:</b>\n"
+					"1. Drag me in, let’s get cozy 🤫\n"
+					"2. Give me admin powers to tease 👑\n"
+					"3. I watch silently, catching all 👀\n"
+					"4. Sneaky? BAM! Secrets spilled 💥\n\n"
+					"<b>My Powers:</b>\n"
+					"• 👁️ Always watching you\n"
+					"• 🚨 Catch sus instantly\n"
+					"• 📊 Remember EVERYTHING\n"
+					"• ⚡ Faster than excuses\n\n"
+					"<b>Advanced Moves:</b>\n"
+					"• 🔄 Track every edit\n"
+					"• 🗑️ Expose deleted msgs\n"
+					"• 📈 Monitor performance\n"
+					"• 🛡️ Stealth until slip\n\n"
+					"Need backup? Join us for epic support! 💖"
+				)
             
             # Create minimize button
             builder = InlineKeyboardBuilder()
@@ -1083,7 +1082,7 @@ class SusNinjaBot:
                 
         except Exception as e:
             logger.error(f"❌ Error expanding help: {e}")
-            await callback_query.answer("💥 Uh oh! Help expansion just exploded in my face!", show_alert=True)
+            await callback_query.answer("🌷 Uh oh! Help expansion exploded on me! 💥", show_alert=True)
     
     async def _handle_help_minimize(self, callback_query: types.CallbackQuery) -> None:
         """Handle help minimize callback"""
@@ -1100,30 +1099,30 @@ class SusNinjaBot:
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_basic = (
-                    f"🥷 <b>Sus Ninja Bot Help for {user_mention}</b>\n\n"
-                    "<b>Ninja Commands:</b>\n"
-                    "• <code>/start</code> - Awaken the Sus Ninja\n"
-                    "• <code>/help</code> - Show ninja techniques\n"
-                    "• <code>/ping</code> - Test ninja reflexes\n\n"
-                    "<b>How the Ninja operates:</b>\n"
-                    "1. Add me to your group\n"
-                    "2. Grant me admin stealth powers\n"
-                    "3. I'll silently watch all messages\n"
-                    "4. When someone acts sus (deletes/edits), I'll expose them"
-                )
+				    f"🥷 <b>Sus Ninja Bot Help for {user_mention}</b>\n\n"
+				    "<b>Ninja Commands:</b>\n"
+  				  "• <b>/start</b> - Wake up your naughty Sus Ninja 💖\n"
+ 				   "• <b>/help</b> - Peek at my sexy secrets 💕\n"
+  				  "• <b>/ping</b> - Test my quick, teasing reflexes 💫\n\n"
+				    "<b>How your naughty ninja works:</b>\n"
+  				  "1. Add me to your group and let me get cozy 🤫\n"
+  				  "2. Give me admin powers to watch and tease 👑\n"
+ 				   "3. I silently catch every cheeky move 👀\n"
+  				  "4. When someone gets sus (deletes/edits), I spill the naughty tea 💥"
+				)
             else:
                 help_text_basic = (
-                    "🥷 <b>Sus Ninja Bot Help</b>\n\n"
-                    "<b>Ninja Commands:</b>\n"
-                    "• <code>/start</code> - Awaken the Sus Ninja\n"
-                    "• <code>/help</code> - Show ninja techniques\n"
-                    "• <code>/ping</code> - Test ninja reflexes\n\n"
-                    "<b>How the Ninja operates:</b>\n"
-                    "1. Add me to your group\n"
-                    "2. Grant me admin stealth powers\n"
-                    "3. I'll silently watch all messages\n"
-                    "4. When someone acts sus (deletes/edits), I'll expose them"
-                )
+				    "🥷 <b>Sus Ninja Bot Help</b>\n\n"
+				    "<b>Ninja Commands:</b>\n"
+  				  "• <b>/start</b> - Wake up your naughty Sus Ninja 💖\n"
+ 				   "• <b>/help</b> - Peek at my sexy secrets 💕\n"
+  				  "• <b>/ping</b> - Test my quick, teasing reflexes 💫\n\n"
+				    "<b>How your naughty ninja works:</b>\n"
+  				  "1. Add me to your group and let me get cozy 🤫\n"
+  				  "2. Give me admin powers to watch and tease 👑\n"
+ 				   "3. I silently catch every cheeky move 👀\n"
+  				  "4. When someone gets sus (deletes/edits), I spill the naughty tea 💥"
+				)
             
             # Create expand button
             builder = InlineKeyboardBuilder()
@@ -1142,7 +1141,7 @@ class SusNinjaBot:
                 
         except Exception as e:
             logger.error(f"❌ Error minimizing help: {e}")
-            await callback_query.answer("🔥 Whoops! Help minimizer had a meltdown!", show_alert=True)
+            await callback_query.answer("🌷 Uh oh! Help minimizer just melted down!", show_alert=True)
 
     async def _handle_callback_query(self, callback_query: types.CallbackQuery) -> None:
         """Handle inline button callbacks"""
@@ -1161,7 +1160,7 @@ class SusNinjaBot:
                     
                     # Prevent the editor from using reveal/hide buttons
                     if callback_query.from_user.id == editor_id:
-                        await callback_query.answer("😝 Nice try! Can't spy on your own dirty work, chief!", show_alert=True)
+                        await callback_query.answer("🌷 Nice try, sweetie! No spying on your mess!", show_alert=True)
                         return
                     
                     chat_id = callback_query.message.chat.id
@@ -1180,7 +1179,7 @@ class SusNinjaBot:
                                 f"📝 <b>Message Edited</b> by {edit_data['editor_mention']}\n"
                                 f"<i>Click Reveal to see the changes</i>"
                             )
-                            new_button_text = "👁️👄👁️"
+                            new_button_text = "👀️"
                         else:
                             # Show the edit details
                             new_text = (
@@ -1212,10 +1211,10 @@ class SusNinjaBot:
                         )
                         
                         action = "hidden" if is_revealed else "revealed"
-                        await callback_query.answer(f"🎭 Boom! Edit details {action} like magic!")
+                        await callback_query.answer(f"✨ Yay! Details {action} just perfectly 💕")
                         logger.info(f"🔄 Edit details {action} by user {callback_query.from_user.id}")
                     else:
-                        await callback_query.answer("🕵️ Hmm, that edit data vanished into thin air!", show_alert=True)
+                        await callback_query.answer("🌷 Hmm, that edit data poofed away, sweetie!", show_alert=True)
                         
             elif callback_query.data.startswith("dismiss_edit:"):
                 # Handle dismiss functionality
@@ -1232,7 +1231,7 @@ class SusNinjaBot:
                         
                         # Prevent the editor from dismissing their own edit notification
                         if callback_query.from_user.id == editor_id:
-                            await callback_query.answer("🙄 Really? Trying to hide your own mess? That's not how this works, buddy!", show_alert=True)
+                            await callback_query.answer("🌷 Trying to hide that mess? Not today, sweetie! 🌸", show_alert=True)
                             return
                     
                     # Check if user is admin in the chat
@@ -1241,16 +1240,16 @@ class SusNinjaBot:
                         is_admin = chat_member.status in ['administrator', 'creator']
                         
                         if not is_admin:
-                            await callback_query.answer("👑 Hold up there, peasant! Only admins can clean up this mess!", show_alert=True)
+                            await callback_query.answer("🌷 Wait up, sweetie! Only admins handle this mess! 🌸", show_alert=True)
                             return
                     except Exception as e:
                         logger.error(f"Error checking admin status: {e}")
-                        await callback_query.answer("🤖 Oops! My circuits got confused checking your rank. Try again!", show_alert=True)
+                        await callback_query.answer("🧚‍♀️ Oops! My circuits fluttered away. Try again, darling!", show_alert=True)
                         return
                     
                     # Allow dismiss for admins only (except the editor)
                     await callback_query.message.delete()
-                    await callback_query.answer("💨 Poof! Edit notification sent to the shadow realm!")
+                    await callback_query.answer("🌷 Poof! Edit floated away, babe!")
                     logger.info(f"🗑️ Edit notification dismissed by admin {callback_query.from_user.id}")
                     
                     # Clean up cached edit data
@@ -1259,7 +1258,7 @@ class SusNinjaBot:
             # Handle broadcast target selection
             elif callback_query.data in ["broadcast_users", "broadcast_groups"]:
                 if not callback_query.from_user or callback_query.from_user.id != OWNER_ID:
-                    await callback_query.answer("🚫 Nah fam, this button ain't for you!", show_alert=True)
+                    await callback_query.answer("🌷 Not for you, sweetie, sorry!", show_alert=True)
                     return
                 
                 target = "users" if callback_query.data == "broadcast_users" else "groups"
@@ -1269,7 +1268,7 @@ class SusNinjaBot:
                 broadcast_mode.add(callback_query.from_user.id)
                 broadcast_target[callback_query.from_user.id] = target
                 
-                await callback_query.answer(f"🔥 Broadcast mode ACTIVATED! Time to unleash chaos on {target}! 💥📡")
+                await callback_query.answer(f"🌷 Broadcast’s live! Time to stir the pot, {target}! 💥📡")
                 
                 # Update the message
                 if callback_query.message:
@@ -1290,7 +1289,7 @@ class SusNinjaBot:
                 
         except Exception as e:
             logger.error(f"Error handling callback query: {e}")
-            await callback_query.answer("💀 Oops! Something went horribly wrong!", show_alert=True)
+            await callback_query.answer("🌷 Oops! Things didn’t go as planned!", show_alert=True)
     
     async def _periodic_cleanup(self) -> None:
         """Periodic cleanup task to manage memory usage"""
