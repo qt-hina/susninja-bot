@@ -580,33 +580,33 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_basic = f"""
-💖 <b>Sus Ninja Manual for {user_mention}</b>
+🔥 <b>Sus Ninja Manual for {user_mention}</b>
 
-<b>My Arsenal:</b>
-• <b>/start</b> - Wake up your fierce ninja baby 🔥
-• <b>/help</b> - Peek at my secret moves 💕
-• <b>/ping</b> - Check if I’m still buzzing for you 💫
+<b>Commands to Play:</b>
+• <b>/start</b> – Fire up your stealthy ninja ⚡  
+• <b>/help</b> – Unlock my secret skills 🔓  
+• <b>/ping</b> – See if I’m still on the hunt 🎯  
 
-<b>How I own your group:</b>
-1. Drag me in and let’s get cozy 😘
-2. Give me admin powers to play hard 👑
-3. I’ll lurk and watch every naughty move 👀
-4. Someone’s sneaky? BAM! Secrets out! 💥
+<b>How I Run Your Squad:</b>
+1. Invite me in — let the games begin 🎲  
+2. Grant me admin — time to flex 👑  
+3. I spy quietly — no move goes unseen 👀️  
+4. Catch a cheater? Boom! I spill the tea ☕💥  
 """
             else:
                 help_text_basic = """
 💖 <b>Sus Ninja Manual</b>
 
 <b>My Arsenal:</b>
-• <b>/start</b> - Wake up your fierce ninja baby 🔥
-• <b>/help</b> - Peek at my secret moves 💕
-• <b>/ping</b> - Check if I’m still buzzing for you 💫
+• <b>/start</b> - Wake up your fierce ninja baby 🔥  
+• <b>/help</b> - Peek at my secret moves 💕  
+• <b>/ping</b> - Check if I’m still buzzing for you 💫  
 
 <b>How I own your group:</b>
-1. Drag me in and let’s get cozy 😘
-2. Give me admin powers to play hard 👑
-3. I’ll lurk and watch every naughty move 👀
-4. Someone’s sneaky? BAM! Secrets out! 💥
+1. Drag me in and let’s get cozy 😘  
+2. Give me admin powers to play hard 👑  
+3. I’ll lurk and watch every naughty move 👀  
+4. Someone’s sneaky? BAM! Secrets out! 💥  
 """
             
             # Create inline keyboard with expand button
@@ -652,7 +652,7 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             )
             
             logger.info(f"📤 Sending ping response to {user_info['full_name'] if user_info else 'user'}")
-            await message.reply(status_text, parse_mode="HTML")
+            await message.reply(status_text, parse_mode="HTML", disable_web_page_preview=True)
             logger.info(f"✅ Ping response sent successfully ({response_time}ms) to {user_info['user_id'] if user_info else 'unknown'}")
             
         except Exception as e:
@@ -1030,59 +1030,51 @@ Add me to your group and let me catch all the sneaky fun! 🎭
                 help_text_expanded = f"""
 💖 <b>Sus Ninja Manual for {user_mention}</b>
 
-<b>My Arsenal:</b>
-• /start - Wake your fierce Sus Ninja 💞
-• /help - Grab this sexy guide 💕
-• /ping - Check if I’m ready 💫
+<b>Basic Commands:</b>
+• /start – Wake your naughty ninja 💞  
+• /help – This spicy guide 💕  
+• /ping – Check my heartbeat 💫  
 
-<b>How I rule your group:</b>
-1. Drag me in, let’s get cozy 🤫
-2. Give me admin powers to tease 👑
-3. I watch silently, catching all 👀
-4. Sneaky? BAM! Secrets spilled 💥
+<b>Group Setup:</b>
+1. Add me to your group 🤫  
+2. Make me admin 👑  
+3. I’ll quietly watch everything 👀  
+4. Caught? I expose it 💥  
 
-<b>My Powers:</b>
-• 👀️ Always watching you
-• 🚨 Catch sus instantly
-• 📊 Remember EVERYTHING
-• ⚡ Faster than excuses
+<b>What I Do:</b>
+• 🚨 Catch edits & deletes  
+• 📊 Remember everything  
+• ⚡ React super fast  
 
-<b>Advanced Moves:</b>
-• 🔄 Track every edit
-• 🗑️ Expose deleted msgs
-• 📈 Monitor performance
-• 🛡️ Stealth until slip
+<b>Advanced Tricks:</b>
+• 🛡️ Stay hidden till needed  
 
-Need backup? Join us for epic support! 💖
+Need help? Tap in for backup 💖
 """
             else:
                 help_text_expanded = """
 💖 <b>Sus Ninja Manual</b>
 
-<b>My Arsenal:</b>
-• /start - Wake your fierce Sus Ninja 💞
-• /help - Grab this sexy guide 💕
-• /ping - Check if I’m ready 💫
+<b>Basic Commands:</b>
+• /start – Wake your naughty ninja 💞  
+• /help – This spicy guide 💕  
+• /ping – Check my heartbeat 💫  
 
-<b>How I rule your group:</b>
-1. Drag me in, let’s get cozy 🤫
-2. Give me admin powers to tease 👑
-3. I watch silently, catching all 👀
-4. Sneaky? BAM! Secrets spilled 💥
+<b>Group Setup:</b>
+1. Add me to your group 🤫  
+2. Make me admin 👑  
+3. I’ll quietly watch everything 👀  
+4. Caught? I expose it 💥  
 
-<b>My Powers:</b>
-• 👀️ Always watching you
-• 🚨 Catch sus instantly
-• 📊 Remember EVERYTHING
-• ⚡ Faster than excuses
+<b>What I Do:</b>
+• 🚨 Catch edits & deletes  
+• 📊 Remember everything  
+• ⚡ React super fast  
 
-<b>Advanced Moves:</b>
-• 🔄 Track every edit
-• 🗑️ Expose deleted msgs
-• 📈 Monitor performance
-• 🛡️ Stealth until slip
+<b>Advanced Tricks:</b>
+• 🛡️ Stay hidden till needed  
 
-Need backup? Join us for epic support! 💖
+Need help? Tap in for backup 💖
 """
             
             # Create minimize button
@@ -1119,33 +1111,42 @@ Need backup? Join us for epic support! 💖
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_basic = f"""
-🥷 <b>Sus Ninja Bot Help for {user_mention}</b>
+🥷 <b>Hey {user_mention}, I'm your silent group shadow.</b>
 
-<b>Ninja Commands:</b>
-• <b>/start</b> - Wake up your naughty Sus Ninja 💖
-• <b>/help</b> - Peek at my sexy secrets 💕
-• <b>/ping</b> - Test my quick, teasing reflexes 💫
+No rules. No drama. Just pure surveillance.
 
-<b>How your naughty ninja works:</b>
-1. Add me to your group and let me get cozy 🤫
-2. Give me admin powers to watch and tease 👑
-3. I silently catch every cheeky move 👀
-4. When someone gets sus (deletes/edits), I spill the naughty tea 💥
+<b>🧩 Commands:</b>
+• /start — Let's begin the stalking  
+• /help — You’re looking at it  
+• /ping — Check if I’m breathing  
+
+<b>🕵️‍♂️ What I Really Do:</b>
+• I blend into your group silently  
+• Spot message edits like a hawk  
+• Catch deletes before they vanish  
+• Expose everything without a sound  
+
+<b>👑 Just make me admin. I’ll handle the rest.</b>  
+Sus moves? Consider them exposed.
 """
             else:
                 help_text_basic = """
-🥷 <b>Sus Ninja Bot Help</b>
+<b>🥷 Meet Your Sus Ninja</b>
 
-<b>Ninja Commands:</b>
-• <b>/start</b> - Wake up your naughty Sus Ninja 💖
-• <b>/help</b> - Peek at my sexy secrets 💕
-• <b>/ping</b> - Test my quick, teasing reflexes 💫
+Keeping things sneaky? I’ve got your back.
 
-<b>How your naughty ninja works:</b>
-1. Add me to your group and let me get cozy 🤫
-2. Give me admin powers to watch and tease 👑
-3. I silently catch every cheeky move 👀
-4. When someone gets sus (deletes/edits), I spill the naughty tea 💥
+<b>✨ Quick Commands:</b>
+• /start – Activate your ninja  
+• /help – Show this guide  
+• /ping – Check my speed  
+
+<b>🔍 What I Do:</b>
+• Spot edited messages  
+• Reveal deleted secrets  
+• Stay silent till it’s sus  
+• Always watching 👀
+
+Just add me to your group & give me admin powers — I’ll handle the rest. 💥
 """
             
             # Create expand button
