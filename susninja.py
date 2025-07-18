@@ -579,31 +579,35 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             logger.debug("📝 Preparing help message content")
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
-                help_text_basic = (
-    				f"💖 <b>Sus Ninja Manual for {user_mention}</b>\n\n"
-				    "<b>My Arsenal:</b>\n"
-				    "• <b>/start</b> - Wake up your fierce ninja baby 🔥\n"
-				    "• <b>/help</b> - Peek at my secret moves 💕\n"
-				    "• <b>/ping</b> - Check if I’m still buzzing for you 💫\n\n"
-				    "<b>How I own your group:</b>\n"
-				    "1. Drag me in and let’s get cozy 😘\n"
-				    "2. Give me admin powers to play hard 👑\n"
-				    "3. I’ll lurk and watch every naughty move 👀\n"
-				    "4. Someone’s sneaky? BAM! Secrets out! 💥"
-				)
+                help_text_basic = f"""
+💖 <b>Sus Ninja Manual for {user_mention}</b>
+
+<b>My Arsenal:</b>
+• <b>/start</b> - Wake up your fierce ninja baby 🔥
+• <b>/help</b> - Peek at my secret moves 💕
+• <b>/ping</b> - Check if I’m still buzzing for you 💫
+
+<b>How I own your group:</b>
+1. Drag me in and let’s get cozy 😘
+2. Give me admin powers to play hard 👑
+3. I’ll lurk and watch every naughty move 👀
+4. Someone’s sneaky? BAM! Secrets out! 💥
+"""
             else:
-                help_text_basic = (
-    				"💖 <b>Sus Ninja Manual</b>\n\n"
-				    "<b>My Arsenal:</b>\n"
-				    "• <b>/start</b> - Wake up your fierce ninja baby 🔥\n"
-				    "• <b>/help</b> - Peek at my secret moves 💕\n"
-				    "• <b>/ping</b> - Check if I’m still buzzing for you 💫\n\n"
-				    "<b>How I own your group:</b>\n"
-				    "1. Drag me in and let’s get cozy 😘\n"
-				    "2. Give me admin powers to play hard 👑\n"
-				    "3. I’ll lurk and watch every naughty move 👀\n"
-				    "4. Someone’s sneaky? BAM! Secrets out! 💥"
-				)
+                help_text_basic = """
+💖 <b>Sus Ninja Manual</b>
+
+<b>My Arsenal:</b>
+• <b>/start</b> - Wake up your fierce ninja baby 🔥
+• <b>/help</b> - Peek at my secret moves 💕
+• <b>/ping</b> - Check if I’m still buzzing for you 💫
+
+<b>How I own your group:</b>
+1. Drag me in and let’s get cozy 😘
+2. Give me admin powers to play hard 👑
+3. I’ll lurk and watch every naughty move 👀
+4. Someone’s sneaky? BAM! Secrets out! 💥
+"""
             
             # Create inline keyboard with expand button
             builder = InlineKeyboardBuilder()
@@ -868,7 +872,7 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             
             # Create initial notification (hidden by default)
             edit_notification = (
-                f"📝 <b>Message Edited</b> by <b>{user_mention}</b>\n"
+                f"📝 <b>Message Edited</b> by <b>{user_mention}</b>"
             )
             
             # Create inline keyboard with Reveal/Hide and Dismiss buttons
@@ -938,7 +942,7 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             for new_member in message.new_chat_members:
                 if new_member.id == bot_info.id:
                     welcome_msg = (
-						"👋 Hey there! Thanks for adding Sus Ninja!\n\n"
+						"👋 Hey there! Thanks for adding me!\n\n"
 						"I’m now watching your group for sneaky deletes and edits.\n\n"
 						"Important: Give me admin powers so I can do my magic! 💖\n\n"
 						"Type /help to see all my naughty tricks!"
@@ -1023,53 +1027,63 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             # Create expanded help message
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
-                help_text_expanded = (
-					f"💖 <b>Sus Ninja Manual for {user_mention}</b>\n\n"
-					"<b>My Arsenal:</b>\n"
-					"• /start - Wake your fierce Sus Ninja 💞\n"
-					"• /help - Grab this sexy guide 💕\n"
-					"• /ping - Check if I’m ready 💫\n\n"
-					"<b>How I rule your group:</b>\n"
-					"1. Drag me in, let’s get cozy 🤫\n"
-					"2. Give me admin powers to tease 👑\n"
-					"3. I watch silently, catching all 👀\n"
-					"4. Sneaky? BAM! Secrets spilled 💥\n\n"
-					"<b>My Powers:</b>\n"
-					"• 👀️ Always watching you\n"
-					"• 🚨 Catch sus instantly\n"
-					"• 📊 Remember EVERYTHING\n"
-					"• ⚡ Faster than excuses\n\n"
-					"<b>Advanced Moves:</b>\n"
-					"• 🔄 Track every edit\n"
-					"• 🗑️ Expose deleted msgs\n"
-					"• 📈 Monitor performance\n"
-					"• 🛡️ Stealth until slip\n\n"
-					"Need backup? Join us for epic support! 💖"
-				)
+                help_text_expanded = f"""
+💖 <b>Sus Ninja Manual for {user_mention}</b>
+
+<b>My Arsenal:</b>
+• /start - Wake your fierce Sus Ninja 💞
+• /help - Grab this sexy guide 💕
+• /ping - Check if I’m ready 💫
+
+<b>How I rule your group:</b>
+1. Drag me in, let’s get cozy 🤫
+2. Give me admin powers to tease 👑
+3. I watch silently, catching all 👀
+4. Sneaky? BAM! Secrets spilled 💥
+
+<b>My Powers:</b>
+• 👀️ Always watching you
+• 🚨 Catch sus instantly
+• 📊 Remember EVERYTHING
+• ⚡ Faster than excuses
+
+<b>Advanced Moves:</b>
+• 🔄 Track every edit
+• 🗑️ Expose deleted msgs
+• 📈 Monitor performance
+• 🛡️ Stealth until slip
+
+Need backup? Join us for epic support! 💖
+"""
             else:
-                help_text_expanded = (
-					"💖 <b>Sus Ninja Manual</b>\n\n"
-					"<b>My Arsenal:</b>\n"
-					"• /start - Wake your fierce Sus Ninja 💞\n"
-					"• /help - Grab this sexy guide 💕\n"
-					"• /ping - Check if I’m ready 💫\n\n"
-					"<b>How I rule your group:</b>\n"
-					"1. Drag me in, let’s get cozy 🤫\n"
-					"2. Give me admin powers to tease 👑\n"
-					"3. I watch silently, catching all 👀\n"
-					"4. Sneaky? BAM! Secrets spilled 💥\n\n"
-					"<b>My Powers:</b>\n"
-					"• 👀️ Always watching you\n"
-					"• 🚨 Catch sus instantly\n"
-					"• 📊 Remember EVERYTHING\n"
-					"• ⚡ Faster than excuses\n\n"
-					"<b>Advanced Moves:</b>\n"
-					"• 🔄 Track every edit\n"
-					"• 🗑️ Expose deleted msgs\n"
-					"• 📈 Monitor performance\n"
-					"• 🛡️ Stealth until slip\n\n"
-					"Need backup? Join us for epic support! 💖"
-				)
+                help_text_expanded = """
+💖 <b>Sus Ninja Manual</b>
+
+<b>My Arsenal:</b>
+• /start - Wake your fierce Sus Ninja 💞
+• /help - Grab this sexy guide 💕
+• /ping - Check if I’m ready 💫
+
+<b>How I rule your group:</b>
+1. Drag me in, let’s get cozy 🤫
+2. Give me admin powers to tease 👑
+3. I watch silently, catching all 👀
+4. Sneaky? BAM! Secrets spilled 💥
+
+<b>My Powers:</b>
+• 👀️ Always watching you
+• 🚨 Catch sus instantly
+• 📊 Remember EVERYTHING
+• ⚡ Faster than excuses
+
+<b>Advanced Moves:</b>
+• 🔄 Track every edit
+• 🗑️ Expose deleted msgs
+• 📈 Monitor performance
+• 🛡️ Stealth until slip
+
+Need backup? Join us for epic support! 💖
+"""
             
             # Create minimize button
             builder = InlineKeyboardBuilder()
@@ -1104,31 +1118,35 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             # Create basic help message
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
-                help_text_basic = (
-				    f"🥷 <b>Sus Ninja Bot Help for {user_mention}</b>\n\n"
-				    "<b>Ninja Commands:</b>\n"
-  				  "• <b>/start</b> - Wake up your naughty Sus Ninja 💖\n"
- 				   "• <b>/help</b> - Peek at my sexy secrets 💕\n"
-  				  "• <b>/ping</b> - Test my quick, teasing reflexes 💫\n\n"
-				    "<b>How your naughty ninja works:</b>\n"
-  				  "1. Add me to your group and let me get cozy 🤫\n"
-  				  "2. Give me admin powers to watch and tease 👑\n"
- 				   "3. I silently catch every cheeky move 👀\n"
-  				  "4. When someone gets sus (deletes/edits), I spill the naughty tea 💥"
-				)
+                help_text_basic = f"""
+🥷 <b>Sus Ninja Bot Help for {user_mention}</b>
+
+<b>Ninja Commands:</b>
+• <b>/start</b> - Wake up your naughty Sus Ninja 💖
+• <b>/help</b> - Peek at my sexy secrets 💕
+• <b>/ping</b> - Test my quick, teasing reflexes 💫
+
+<b>How your naughty ninja works:</b>
+1. Add me to your group and let me get cozy 🤫
+2. Give me admin powers to watch and tease 👑
+3. I silently catch every cheeky move 👀
+4. When someone gets sus (deletes/edits), I spill the naughty tea 💥
+"""
             else:
-                help_text_basic = (
-				    "🥷 <b>Sus Ninja Bot Help</b>\n\n"
-				    "<b>Ninja Commands:</b>\n"
-  				  "• <b>/start</b> - Wake up your naughty Sus Ninja 💖\n"
- 				   "• <b>/help</b> - Peek at my sexy secrets 💕\n"
-  				  "• <b>/ping</b> - Test my quick, teasing reflexes 💫\n\n"
-				    "<b>How your naughty ninja works:</b>\n"
-  				  "1. Add me to your group and let me get cozy 🤫\n"
-  				  "2. Give me admin powers to watch and tease 👑\n"
- 				   "3. I silently catch every cheeky move 👀\n"
-  				  "4. When someone gets sus (deletes/edits), I spill the naughty tea 💥"
-				)
+                help_text_basic = """
+🥷 <b>Sus Ninja Bot Help</b>
+
+<b>Ninja Commands:</b>
+• <b>/start</b> - Wake up your naughty Sus Ninja 💖
+• <b>/help</b> - Peek at my sexy secrets 💕
+• <b>/ping</b> - Test my quick, teasing reflexes 💫
+
+<b>How your naughty ninja works:</b>
+1. Add me to your group and let me get cozy 🤫
+2. Give me admin powers to watch and tease 👑
+3. I silently catch every cheeky move 👀
+4. When someone gets sus (deletes/edits), I spill the naughty tea 💥
+"""
             
             # Create expand button
             builder = InlineKeyboardBuilder()
@@ -1182,8 +1200,7 @@ Add me to your group and let me catch all the sneaky fun! 🎭
                         if is_revealed:
                             # Hide the edit details
                             new_text = (
-                                f"📝 <b>Message Edited</b> by {edit_data['editor_mention']}\n"
-                                f"<i>Click Reveal to see the changes</i>"
+                                f"📝 <b>Message Edited</b> by {edit_data['editor_mention']}"
                             )
                             new_button_text = "👀️"
                         else:
