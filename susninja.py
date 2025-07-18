@@ -1101,7 +1101,6 @@ Need help? Just tap in 💖
 ├─ <b>/start</b> – Wake me up   
 ├─ <b>/help</b> – Show this guide  
 └─ <b>/ping</b> – Check if I’m alive</blockquote>  
-
 <blockquote>📖 How I work:
 ├─ Add me to your group   
 ├─ Make me admin 
@@ -1116,7 +1115,6 @@ Need help? Just tap in 💖
 ├─ <b>/start</b> – Wake me up  
 ├─ <b>/help</b> – Show this guide   
 └─ <b>/ping</b> – Check if I’m alive</blockquote>  
-
 <blockquote>📖 How I work:
 ├─ Add me to your group  
 ├─ Make me admin 
