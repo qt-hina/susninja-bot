@@ -502,31 +502,23 @@ class SusNinjaBot:
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 welcome_text = f"""
-💖 <b>Hey {user_mention}, your Sus Ninja just woke up!</b>
+💖 <b>Hey {user_mention}, Welcome!</b>
 
-I’m your cheeky guardian watching all the sneaky moves! 💕  
+💓 I'm here to keep an eye on message edits.
 
-<b>My Lovely Skills:</b>
-• 👀 Spy on message edits like a pro  
-• 🕵️ Find those deleted secrets  
-• ⚡ Strike quick with love and style  
-• 🤫 Stay stealthy until someone acts sus  
+<blockquote>I track all edited messages in the group 💘</blockquote>
 
-Add me to your group and let me catch all the sneaky fun! 🎭
+💌 Add me to your group and I’ll handle the rest!
 """
             else:
-                welcome_text = """
-💖 <b>Hey babe, the Sus Ninja is awake!</b>
+                welcome_text = f"""
+💖 <b>Hey Sweetie, Welcome!</b>
 
-I’m your cheeky guardian watching all the sneaky moves! 💕
+💓 I'm here to keep an eye on message edits.
 
-<b>My Lovely Skills:</b>
-• 👀 Spy on message edits like a pro  
-• 🕵️ Find those deleted secrets  
-• ⚡ Strike quick with love and style  
-• 🤫 Stay stealthy until someone acts sus  
+<blockquote>I track all edited messages in the group 💘</blockquote>
 
-Add me to your group and let me catch all the sneaky fun! 🎭
+💌 Add me to your group and I’ll handle the rest!
 """
             
             # Create inline keyboard with specified layout
@@ -580,33 +572,33 @@ Add me to your group and let me catch all the sneaky fun! 🎭
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_basic = f"""
-🔥 <b>Sus Ninja Manual for {user_mention}</b>
+💖 <b>Hey {user_mention}, need help?</b>
 
-<b>Commands to Play:</b>
-• <b>/start</b> – Fire up your stealthy ninja ⚡  
-• <b>/help</b> – Unlock my secret skills 🔓  
-• <b>/ping</b> – See if I’m still on the hunt 🎯  
+<blockquote>💘 Here’s what I can do:
+├─ <b>/start</b> – Wake me up 💫  
+├─ <b>/help</b> – Show this guide 💌  
+└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
 
-<b>How I Run Your Squad:</b>
-1. Invite me in — let the games begin 🎲  
-2. Grant me admin — time to flex 👑  
-3. I spy quietly — no move goes unseen 👀️  
-4. Catch a cheater? Boom! I spill the tea ☕💥  
+<blockquote>📖 How I work:
+├─ Add me to your group 💕  
+├─ Make me admin 💪  
+├─ I watch everything quietly 👀  
+└─ Someone acts sus? I’ll let you know 🫢</blockquote>
 """
             else:
-                help_text_basic = """
-💖 <b>Sus Ninja Manual</b>
+                help_text_basic = f"""
+💖 <b>Hey there cutie, need help?</b>
 
-<b>My Arsenal:</b>
-• <b>/start</b> - Wake up your fierce ninja baby 🔥  
-• <b>/help</b> - Peek at my secret moves 💕  
-• <b>/ping</b> - Check if I’m still buzzing for you 💫  
+<blockquote>💘 Here’s what I can do:
+├─ <b>/start</b> – Wake me up 💫  
+├─ <b>/help</b> – Show this guide 💌  
+└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
 
-<b>How I own your group:</b>
-1. Drag me in and let’s get cozy 😘  
-2. Give me admin powers to play hard 👑  
-3. I’ll lurk and watch every naughty move 👀  
-4. Someone’s sneaky? BAM! Secrets out! 💥  
+<blockquote>📖 How I work:
+├─ Add me to your group 💕  
+├─ Make me admin 💪  
+├─ I watch everything quietly 👀  
+└─ Someone acts sus? I’ll let you know 🫢</blockquote>
 """
             
             # Create inline keyboard with expand button
@@ -1030,51 +1022,45 @@ Add me to your group and let me catch all the sneaky fun! 🎭
                 help_text_expanded = f"""
 💖 <b>Sus Ninja Manual for {user_mention}</b>
 
-<b>Basic Commands:</b>
-• /start – Wake your naughty ninja 💞  
-• /help – This spicy guide 💕  
-• /ping – Check my heartbeat 💫  
+<blockquote><b>📦 Basic Commands:</b>
+├─ 💞 /start – Wake me up  
+├─ 💕 /help – This spicy guide  
+└─ 💫 /ping – Check my heartbeat</blockquote>
 
-<b>Group Setup:</b>
-1. Add me to your group 🤫  
-2. Make me admin 👑  
-3. I’ll quietly watch everything 👀  
-4. Caught? I expose it 💥  
+<blockquote><b>👥 Group Setup:</b>
+├─ 🤫 Add me to your group  
+├─ 👑 Make me admin  
+├─ 👀 I’ll quietly watch everything  
+└─ 💥 Caught? I expose it</blockquote>
 
-<b>What I Do:</b>
-• 🚨 Catch edits & deletes  
-• 📊 Remember everything  
-• ⚡ React super fast  
+<blockquote><b>📖 What I Do:</b>
+├─ ✏️ Catch edited messages  
+├─ 📊 Remember everything  
+└─ ⚡ React super fast</blockquote>
 
-<b>Advanced Tricks:</b>
-• 🛡️ Stay hidden till needed  
-
-Need help? Tap in for backup 💖
+Need help? Just tap in 💖
 """
             else:
-                help_text_expanded = """
-💖 <b>Sus Ninja Manual</b>
+                help_text_expanded = f"""
+💖 <b>Sus Ninja Manual for you!</b>
 
-<b>Basic Commands:</b>
-• /start – Wake your naughty ninja 💞  
-• /help – This spicy guide 💕  
-• /ping – Check my heartbeat 💫  
+<blockquote><b>📦 Basic Commands:</b>
+├─ 💞 /start – Wake me up  
+├─ 💕 /help – This spicy guide  
+└─ 💫 /ping – Check my heartbeat</blockquote>
 
-<b>Group Setup:</b>
-1. Add me to your group 🤫  
-2. Make me admin 👑  
-3. I’ll quietly watch everything 👀  
-4. Caught? I expose it 💥  
+<blockquote><b>👥 Group Setup:</b>
+├─ 🤫 Add me to your group  
+├─ 👑 Make me admin  
+├─ 👀 I’ll quietly watch everything  
+└─ 💥 Caught? I expose it</blockquote>
 
-<b>What I Do:</b>
-• 🚨 Catch edits & deletes  
-• 📊 Remember everything  
-• ⚡ React super fast  
+<blockquote><b>📖 What I Do:</b>
+├─ ✏️ Catch edited messages  
+├─ 📊 Remember everything  
+└─ ⚡ React super fast</blockquote>
 
-<b>Advanced Tricks:</b>
-• 🛡️ Stay hidden till needed  
-
-Need help? Tap in for backup 💖
+Need help? Just tap in 💖
 """
             
             # Create minimize button
@@ -1111,42 +1097,33 @@ Need help? Tap in for backup 💖
             if user_info and user_info["user_id"]:
                 user_mention = f'<a href="tg://user?id={user_info["user_id"]}">{user_info["full_name"]}</a>'
                 help_text_basic = f"""
-🥷 <b>Hey {user_mention}, I'm your silent group shadow.</b>
+💖 <b>Hey {user_mention}, need help?</b>
 
-No rules. No drama. Just pure surveillance.
+<blockquote>💘 Here’s what I can do:
+├─ <b>/start</b> – Wake me up 💫  
+├─ <b>/help</b> – Show this guide 💌  
+└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
 
-<b>🧩 Commands:</b>
-• /start — Let's begin the stalking  
-• /help — You’re looking at it  
-• /ping — Check if I’m breathing  
-
-<b>🕵️‍♂️ What I Really Do:</b>
-• I blend into your group silently  
-• Spot message edits like a hawk  
-• Catch deletes before they vanish  
-• Expose everything without a sound  
-
-<b>👑 Just make me admin. I’ll handle the rest.</b>  
-Sus moves? Consider them exposed.
+<blockquote>📖 How I work:
+├─ Add me to your group 💕  
+├─ Make me admin 💪  
+├─ I watch everything quietly 👀  
+└─ Someone acts sus? I’ll let you know 🫢</blockquote>
 """
             else:
-                help_text_basic = """
-<b>🥷 Meet Your Sus Ninja</b>
+                help_text_basic = f"""
+💖 <b>Hey there cutie, need help?</b>
 
-Keeping things sneaky? I’ve got your back.
+<blockquote>💘 Here’s what I can do:
+├─ <b>/start</b> – Wake me up 💫  
+├─ <b>/help</b> – Show this guide 💌  
+└─ <b>/ping</b> – Check if I’m alive 🩷</blockquote>  
 
-<b>✨ Quick Commands:</b>
-• /start – Activate your ninja  
-• /help – Show this guide  
-• /ping – Check my speed  
-
-<b>🔍 What I Do:</b>
-• Spot edited messages  
-• Reveal deleted secrets  
-• Stay silent till it’s sus  
-• Always watching 👀
-
-Just add me to your group & give me admin powers — I’ll handle the rest. 💥
+<blockquote>📖 How I work:
+├─ Add me to your group 💕  
+├─ Make me admin 💪  
+├─ I watch everything quietly 👀  
+└─ Someone acts sus? I’ll let you know 🫢</blockquote>
 """
             
             # Create expand button
