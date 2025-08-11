@@ -1,24 +1,165 @@
-# All imports
-import asyncio
-import logging
 import os
-import time
-import weakref
 import sys
+import time
+import random
+import logging
 import threading
+import weakref
+import asyncio
+import concurrent.futures
 from collections import defaultdict, deque
-from typing import Dict, Optional, Set
 from datetime import datetime, timedelta
+from typing import Dict, Optional, Set
 from http.server import BaseHTTPRequestHandler, HTTPServer
-
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, F, types
 from aiogram.filters import Command
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from aiogram.types import (
+    BotCommand,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message
+)
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram import F
+
+# Environment variables and config
+BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
+CHANNEL_URL = "https://t.me/WorkGlows"
+GROUP_URL = "https://t.me/SoulMeetsHQ"
+OWNER_ID = 5290407067
+PORT = int(os.environ.get("PORT", 10000))
+
+logger.info(f"🔧 Configuration loaded - Port: {PORT}, Owner ID: {OWNER_ID}")
+
+# Performance configurations
+MAX_MESSAGES_PER_CHAT = 1000
+MESSAGE_TTL = 3600
+CLEANUP_INTERVAL = 300
+MAX_MESSAGE_LENGTH = 4096
+
+logger.info(f"⚙️ Performance config - Max messages: {MAX_MESSAGES_PER_CHAT}, TTL: {MESSAGE_TTL}s, Cleanup: {CLEANUP_INTERVAL}s")
+
+# Bot data structures
+broadcast_mode = set()
+broadcast_target = {}
+user_ids = set()
+group_ids = set()
+
+# Message cache data structures
+messages: Dict[int, Dict[int, dict]] = defaultdict(dict)
+chat_queues: Dict[int, deque] = defaultdict(lambda: deque(maxlen=MAX_MESSAGES_PER_CHAT))
+recent_message_ids: Dict[int, Set[int]] = defaultdict(set)
+last_cleanup = time.time()
+
+logger.info("🗄️ Data structures initialized")
+
+# Bot messages
+WELCOME_MSG = """
+💖 <b>Hey {user_mention}, welcome aboard!</b>
+
+💓 I'm your sweet little spy for message edits.
+
+<blockquote>Every time someone edits a message, I catch it 💘</blockquote>
+
+<i>💌 Just add me to your group and I'll take care of the rest!</i>
+"""
+
+HELP_MSG_BASIC = """
+💖 <b>Hey {user_mention}, need help?</b>
+
+<blockquote>💘 Here's what I can do:
+├─ <b>/start</b> – Wake me up   
+├─ <b>/help</b> – Show this guide  
+└─ <b>/ping</b> – Check if I'm alive</blockquote>  
+<blockquote>📖 How I work:
+├─ Add me to your group  
+├─ Make me admin 
+├─ I watch everything quietly  
+└─ Someone acts sus? I'll let you know</blockquote>
+"""
+
+HELP_MSG_EXPANDED = """
+💖 <b>Sus Ninja Manual for {user_mention}</b>
+
+<blockquote><b>📦 Basic Commands:</b>
+├─ /start – Wake me up  
+├─ /help – This spicy guide  
+└─ /ping – Check my heartbeat</blockquote>
+
+<blockquote><b>👥 Group Setup:</b>
+├─ Add me to your group  
+├─ Make me admin  
+├─ I'll quietly watch everything  
+└─ Caught? I expose it</blockquote>
+
+<blockquote><b>📖 What I Do:</b>
+├─ Catch edited messages  
+├─ Remember everything  
+└─ React super fast</blockquote>
+
+Need help? Just tap in 💖
+"""
+
+GROUP_WELCOME_MSG = """👋 Hey everyone! Thanks for adding me!
+
+I'm now watching your group for sneaky deletes and edits.
+
+Important: Give me admin powers so I can do my magic! 💖
+
+Type /help to see all my naughty tricks!"""
+
+# Bot commands list
+BOT_COMMANDS = [
+    ("start", "⚔️ Awaken Sus Ninja"),
+    ("help", "🥷 Ninja Techniques")
+]
+
+logger.info("📝 Bot messages and commands configured")
+
+# IMAGES LIST
+IMAGES = [
+    "https://ik.imagekit.io/asadofc/Images1.png",
+    "https://ik.imagekit.io/asadofc/Images2.png",
+    "https://ik.imagekit.io/asadofc/Images3.png",
+    "https://ik.imagekit.io/asadofc/Images4.png",
+    "https://ik.imagekit.io/asadofc/Images5.png",
+    "https://ik.imagekit.io/asadofc/Images6.png",
+    "https://ik.imagekit.io/asadofc/Images7.png",
+    "https://ik.imagekit.io/asadofc/Images8.png",
+    "https://ik.imagekit.io/asadofc/Images9.png",
+    "https://ik.imagekit.io/asadofc/Images10.png",
+    "https://ik.imagekit.io/asadofc/Images11.png",
+    "https://ik.imagekit.io/asadofc/Images12.png",
+    "https://ik.imagekit.io/asadofc/Images13.png",
+    "https://ik.imagekit.io/asadofc/Images14.png",
+    "https://ik.imagekit.io/asadofc/Images15.png",
+    "https://ik.imagekit.io/asadofc/Images16.png",
+    "https://ik.imagekit.io/asadofc/Images17.png",
+    "https://ik.imagekit.io/asadofc/Images18.png",
+    "https://ik.imagekit.io/asadofc/Images19.png",
+    "https://ik.imagekit.io/asadofc/Images20.png",
+    "https://ik.imagekit.io/asadofc/Images21.png",
+    "https://ik.imagekit.io/asadofc/Images22.png",
+    "https://ik.imagekit.io/asadofc/Images23.png",
+    "https://ik.imagekit.io/asadofc/Images24.png",
+    "https://ik.imagekit.io/asadofc/Images25.png",
+    "https://ik.imagekit.io/asadofc/Images26.png",
+    "https://ik.imagekit.io/asadofc/Images27.png",
+    "https://ik.imagekit.io/asadofc/Images28.png",
+    "https://ik.imagekit.io/asadofc/Images29.png",
+    "https://ik.imagekit.io/asadofc/Images30.png",
+    "https://ik.imagekit.io/asadofc/Images31.png",
+    "https://ik.imagekit.io/asadofc/Images32.png",
+    "https://ik.imagekit.io/asadofc/Images33.png",
+    "https://ik.imagekit.io/asadofc/Images34.png",
+    "https://ik.imagekit.io/asadofc/Images35.png",
+    "https://ik.imagekit.io/asadofc/Images36.png",
+    "https://ik.imagekit.io/asadofc/Images37.png",
+    "https://ik.imagekit.io/asadofc/Images38.png",
+    "https://ik.imagekit.io/asadofc/Images39.png",
+    "https://ik.imagekit.io/asadofc/Images40.png"
+]
 
 # LOGGING SETUP
-# Color codes for logging
 class Colors:
     BLUE = '\033[94m'      # INFO/WARNING
     GREEN = '\033[92m'     # DEBUG
@@ -141,100 +282,6 @@ def log_with_user_info(level: str, message: str, user_info: Dict[str, any]) -> N
         logger.error(f"❌ Failed to log with user info: {e}")
         # Fallback to simple logging
         getattr(logger, level.lower(), logger.info)(message)
-
-# Environment variables and config
-BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
-CHANNEL_URL = "https://t.me/WorkGlows"
-GROUP_URL = "https://t.me/SoulMeetsHQ"
-OWNER_ID = 5290407067
-PORT = int(os.environ.get("PORT", 10000))
-
-logger.info(f"🔧 Configuration loaded - Port: {PORT}, Owner ID: {OWNER_ID}")
-
-# Performance configurations
-MAX_MESSAGES_PER_CHAT = 1000
-MESSAGE_TTL = 3600
-CLEANUP_INTERVAL = 300
-MAX_MESSAGE_LENGTH = 4096
-
-logger.info(f"⚙️ Performance config - Max messages: {MAX_MESSAGES_PER_CHAT}, TTL: {MESSAGE_TTL}s, Cleanup: {CLEANUP_INTERVAL}s")
-
-# Bot data structures
-broadcast_mode = set()
-broadcast_target = {}
-user_ids = set()
-group_ids = set()
-
-# Message cache data structures
-messages: Dict[int, Dict[int, dict]] = defaultdict(dict)
-chat_queues: Dict[int, deque] = defaultdict(lambda: deque(maxlen=MAX_MESSAGES_PER_CHAT))
-recent_message_ids: Dict[int, Set[int]] = defaultdict(set)
-last_cleanup = time.time()
-
-logger.info("🗄️ Data structures initialized")
-
-# Bot messages
-WELCOME_MSG = """
-💖 <b>Hey {user_mention}, welcome aboard!</b>
-
-💓 I'm your sweet little spy for message edits.
-
-<blockquote>Every time someone edits a message, I catch it 💘</blockquote>
-
-<i>💌 Just add me to your group and I'll take care of the rest!</i>
-"""
-
-HELP_MSG_BASIC = """
-💖 <b>Hey {user_mention}, need help?</b>
-
-<blockquote>💘 Here's what I can do:
-├─ <b>/start</b> – Wake me up   
-├─ <b>/help</b> – Show this guide  
-└─ <b>/ping</b> – Check if I'm alive</blockquote>  
-<blockquote>📖 How I work:
-├─ Add me to your group  
-├─ Make me admin 
-├─ I watch everything quietly  
-└─ Someone acts sus? I'll let you know</blockquote>
-"""
-
-HELP_MSG_EXPANDED = """
-💖 <b>Sus Ninja Manual for {user_mention}</b>
-
-<blockquote><b>📦 Basic Commands:</b>
-├─ /start – Wake me up  
-├─ /help – This spicy guide  
-└─ /ping – Check my heartbeat</blockquote>
-
-<blockquote><b>👥 Group Setup:</b>
-├─ Add me to your group  
-├─ Make me admin  
-├─ I'll quietly watch everything  
-└─ Caught? I expose it</blockquote>
-
-<blockquote><b>📖 What I Do:</b>
-├─ Catch edited messages  
-├─ Remember everything  
-└─ React super fast</blockquote>
-
-Need help? Just tap in 💖
-"""
-
-GROUP_WELCOME_MSG = """👋 Hey there! Thanks for adding me!
-
-I'm now watching your group for sneaky deletes and edits.
-
-Important: Give me admin powers so I can do my magic! 💖
-
-Type /help to see all my naughty tricks!"""
-
-# Bot commands list
-BOT_COMMANDS = [
-    ("start", "⚔️ Awaken Sus Ninja"),
-    ("help", "🥷 Ninja Techniques")
-]
-
-logger.info("📝 Bot messages and commands configured")
 
 # HTTP server for deployment
 class DummyHandler(BaseHTTPRequestHandler):
@@ -382,9 +429,15 @@ def cleanup_expired() -> None:
     except Exception as e:
         logger.error(f"❌ Cleanup error: {e}")
 
-# Main bot functionality
-async def start_command(message: Message, bot: Bot) -> None:
-    # Handle start command
+# Global bot components
+bot = None
+dp = None
+active_chats: Set[int] = set()
+edit_data_cache = {}
+
+# Handler functions
+@dp.message(Command("start"))
+async def start_command(message: Message) -> None:
     try:
         user_info = extract_user_info(message)
         log_with_user_info("INFO", "🚀 /start command received", user_info)
@@ -424,7 +477,15 @@ async def start_command(message: Message, bot: Bot) -> None:
             )
         )
         
-        await message.reply(welcome_text, reply_markup=builder.as_markup(), parse_mode="HTML")
+        # Get random image
+        random_image = random.choice(IMAGES)
+        
+        await message.reply_photo(
+            photo=random_image,
+            caption=welcome_text, 
+            reply_markup=builder.as_markup(), 
+            parse_mode="HTML"
+        )
         log_with_user_info("INFO", "✅ /start command completed successfully", user_info)
         
     except Exception as e:
@@ -435,8 +496,8 @@ async def start_command(message: Message, bot: Bot) -> None:
         except Exception as reply_error:
             logger.error(f"❌ Failed to send error reply: {reply_error}")
 
+@dp.message(Command("help"))
 async def help_command(message: Message) -> None:
-    # Handle help command
     try:
         user_info = extract_user_info(message)
         log_with_user_info("INFO", "❓ /help command received", user_info)
@@ -457,7 +518,15 @@ async def help_command(message: Message) -> None:
             InlineKeyboardButton(text="📖 Expand Guide", callback_data="help_expand")
         )
         
-        await message.reply(help_text, reply_markup=builder.as_markup(), parse_mode="HTML")
+        # Get random image
+        random_image = random.choice(IMAGES)
+        
+        await message.reply_photo(
+            photo=random_image,
+            caption=help_text, 
+            reply_markup=builder.as_markup(), 
+            parse_mode="HTML"
+        )
         log_with_user_info("INFO", "✅ /help command completed successfully", user_info)
         
     except Exception as e:
@@ -468,8 +537,8 @@ async def help_command(message: Message) -> None:
         except Exception as reply_error:
             logger.error(f"❌ Failed to send help error reply: {reply_error}")
 
-async def ping_command(message: Message, bot: Bot) -> None:
-    # Handle ping command
+@dp.message(Command("ping"))
+async def ping_command(message: Message) -> None:
     try:
         user_info = extract_user_info(message)
         log_with_user_info("INFO", "🏓 /ping command received", user_info)
@@ -494,8 +563,8 @@ async def ping_command(message: Message, bot: Bot) -> None:
         except Exception as reply_error:
             logger.error(f"❌ Failed to send ping error reply: {reply_error}")
 
+@dp.message(Command("broadcast"))
 async def broadcast_command(message: Message) -> None:
-    # Handle broadcast command (owner only)
     try:
         user_info = extract_user_info(message)
         log_with_user_info("INFO", "📡 /broadcast command received", user_info)
@@ -533,8 +602,8 @@ async def broadcast_command(message: Message) -> None:
         except Exception as reply_error:
             logger.error(f"❌ Failed to send broadcast error reply: {reply_error}")
 
-async def handle_private_message(message: Message, bot: Bot) -> None:
-    # Handle private messages and broadcasts
+@dp.message(F.chat.type == "private")
+async def handle_private_message(message: Message) -> None:
     try:
         user_info = extract_user_info(message)
         log_with_user_info("DEBUG", "💌 Private message received", user_info)
@@ -590,8 +659,8 @@ async def handle_private_message(message: Message, bot: Bot) -> None:
         user_info = extract_user_info(message) if message else {"user_id": "unknown", "full_name": "unknown"}
         log_with_user_info("ERROR", f"❌ Private message handling error: {e}", user_info)
 
+@dp.message(F.content_type.in_({'text', 'photo', 'video', 'document', 'audio', 'voice', 'video_note', 'sticker', 'animation'}))
 async def handle_message(message: Message) -> None:
-    # Handle incoming messages
     try:
         user_info = extract_user_info(message)
         log_with_user_info("DEBUG", "📨 Message received", user_info)
@@ -604,6 +673,7 @@ async def handle_message(message: Message) -> None:
         if message.chat.type in ['group', 'supergroup']:
             group_ids.add(message.chat.id)
             add_message(message.chat.id, message)
+            active_chats.add(message.chat.id)
             logger.debug(f"📢 Group {message.chat.id} message cached")
         elif message.chat.type == 'private':
             logger.debug("💌 Private message - skipping cache")
@@ -619,8 +689,8 @@ async def handle_message(message: Message) -> None:
         user_info = extract_user_info(message) if message else {"user_id": "unknown", "full_name": "unknown"}
         log_with_user_info("ERROR", f"❌ Message handling error: {e}", user_info)
 
-async def handle_edited_message(edited_message: Message, bot: Bot) -> None:
-    # Handle edited messages
+@dp.edited_message()
+async def handle_edited_message(edited_message: Message) -> None:
     try:
         user_info = extract_user_info(edited_message)
         log_with_user_info("INFO", "📝 Edit detected", user_info)
@@ -683,11 +753,8 @@ async def handle_edited_message(edited_message: Message, bot: Bot) -> None:
         ])
         
         # Store edit data for reveal
-        if not hasattr(bot, 'edit_data_cache'):
-            bot.edit_data_cache = {}
-        
         edit_data_key = f"edit_{chat_id}_{message_id}"
-        bot.edit_data_cache[edit_data_key] = {
+        edit_data_cache[edit_data_key] = {
             'original': original_escaped,
             'new': new_escaped,
             'editor_id': user.id,
@@ -726,8 +793,8 @@ async def handle_edited_message(edited_message: Message, bot: Bot) -> None:
         user_info = extract_user_info(edited_message) if edited_message else {"user_id": "unknown", "full_name": "unknown"}
         log_with_user_info("ERROR", f"❌ Edit handling error: {e}", user_info)
 
-async def handle_new_members(message: Message, bot: Bot, active_chats: Set[int]) -> None:
-    # Handle new members
+@dp.message(F.content_type == 'new_chat_members')
+async def handle_new_members(message: Message) -> None:
     try:
         user_info = extract_user_info(message)
         log_with_user_info("INFO", "👥 New members detected", user_info)
@@ -750,8 +817,8 @@ async def handle_new_members(message: Message, bot: Bot, active_chats: Set[int])
         user_info = extract_user_info(message) if message else {"user_id": "unknown", "full_name": "unknown"}
         log_with_user_info("ERROR", f"❌ New members handling error: {e}", user_info)
 
-async def handle_callback_query(callback_query: types.CallbackQuery, bot: Bot) -> None:
-    # Handle inline button callbacks
+@dp.callback_query()
+async def handle_callback_query(callback_query: types.CallbackQuery) -> None:
     try:
         user_info = {
             "user_id": callback_query.from_user.id,
@@ -772,9 +839,9 @@ async def handle_callback_query(callback_query: types.CallbackQuery, bot: Bot) -
         elif callback_query.data == "help_minimize":
             await handle_help_minimize(callback_query)
         elif callback_query.data.startswith("reveal_edit:"):
-            await handle_reveal_edit(callback_query, bot)
+            await handle_reveal_edit(callback_query)
         elif callback_query.data.startswith("dismiss_edit:"):
-            await handle_dismiss_edit(callback_query, bot)
+            await handle_dismiss_edit(callback_query)
         elif callback_query.data in ["broadcast_users", "broadcast_groups"]:
             await handle_broadcast_target(callback_query)
         else:
@@ -790,7 +857,6 @@ async def handle_callback_query(callback_query: types.CallbackQuery, bot: Bot) -
             logger.error(f"❌ Failed to answer callback query: {answer_error}")
 
 async def handle_help_expand(callback_query: types.CallbackQuery) -> None:
-    # Handle help expand
     try:
         logger.info(f"📖 Help expand requested by {callback_query.from_user.full_name} ({callback_query.from_user.id})")
         
@@ -807,8 +873,8 @@ async def handle_help_expand(callback_query: types.CallbackQuery) -> None:
         
         await callback_query.answer()
         if callback_query.message:
-            await callback_query.message.edit_text(
-                help_text,
+            await callback_query.message.edit_caption(
+                caption=help_text,
                 reply_markup=builder.as_markup(),
                 parse_mode="HTML"
             )
@@ -822,7 +888,6 @@ async def handle_help_expand(callback_query: types.CallbackQuery) -> None:
             logger.error(f"❌ Failed to send help expand error: {answer_error}")
 
 async def handle_help_minimize(callback_query: types.CallbackQuery) -> None:
-    # Handle help minimize
     try:
         logger.info(f"📖 Help minimize requested by {callback_query.from_user.full_name} ({callback_query.from_user.id})")
         
@@ -839,8 +904,8 @@ async def handle_help_minimize(callback_query: types.CallbackQuery) -> None:
         
         await callback_query.answer()
         if callback_query.message:
-            await callback_query.message.edit_text(
-                help_text,
+            await callback_query.message.edit_caption(
+                caption=help_text,
                 reply_markup=builder.as_markup(),
                 parse_mode="HTML"
             )
@@ -853,8 +918,7 @@ async def handle_help_minimize(callback_query: types.CallbackQuery) -> None:
         except Exception as answer_error:
             logger.error(f"❌ Failed to send help minimize error: {answer_error}")
 
-async def handle_reveal_edit(callback_query: types.CallbackQuery, bot: Bot) -> None:
-    # Handle edit reveal/hide
+async def handle_reveal_edit(callback_query: types.CallbackQuery) -> None:
     try:
         logger.info(f"👀 Edit reveal/hide requested by {callback_query.from_user.full_name} ({callback_query.from_user.id})")
         
@@ -872,8 +936,8 @@ async def handle_reveal_edit(callback_query: types.CallbackQuery, bot: Bot) -> N
             chat_id = callback_query.message.chat.id
             edit_data_key = f"edit_{chat_id}_{message_id}"
             
-            if hasattr(bot, 'edit_data_cache') and edit_data_key in bot.edit_data_cache:
-                edit_data = bot.edit_data_cache[edit_data_key]
+            if edit_data_key in edit_data_cache:
+                edit_data = edit_data_cache[edit_data_key]
                 
                 current_text = callback_query.message.text
                 is_revealed = "From:" in current_text and "To:" in current_text
@@ -917,8 +981,7 @@ async def handle_reveal_edit(callback_query: types.CallbackQuery, bot: Bot) -> N
         except Exception as answer_error:
             logger.error(f"❌ Failed to send reveal edit error: {answer_error}")
 
-async def handle_dismiss_edit(callback_query: types.CallbackQuery, bot: Bot) -> None:
-    # Handle edit dismiss
+async def handle_dismiss_edit(callback_query: types.CallbackQuery) -> None:
     try:
         logger.info(f"🗑️ Edit dismiss requested by {callback_query.from_user.full_name} ({callback_query.from_user.id})")
         
@@ -929,8 +992,8 @@ async def handle_dismiss_edit(callback_query: types.CallbackQuery, bot: Bot) -> 
             edit_data_key = f"edit_{chat_id}_{message_id}"
             
             # Check if editor is trying to dismiss
-            if hasattr(bot, 'edit_data_cache') and edit_data_key in bot.edit_data_cache:
-                edit_data = bot.edit_data_cache[edit_data_key]
+            if edit_data_key in edit_data_cache:
+                edit_data = edit_data_cache[edit_data_key]
                 editor_id = edit_data.get('editor_id')
                 
                 if callback_query.from_user.id == editor_id:
@@ -959,8 +1022,8 @@ async def handle_dismiss_edit(callback_query: types.CallbackQuery, bot: Bot) -> 
             logger.info(f"✅ Edit notification dismissed by admin {callback_query.from_user.id}")
             
             # Clean up cached data
-            if hasattr(bot, 'edit_data_cache') and edit_data_key in bot.edit_data_cache:
-                del bot.edit_data_cache[edit_data_key]
+            if edit_data_key in edit_data_cache:
+                del edit_data_cache[edit_data_key]
                 logger.debug(f"🧹 Edit data cache cleaned for key: {edit_data_key}")
                 
     except Exception as e:
@@ -971,7 +1034,6 @@ async def handle_dismiss_edit(callback_query: types.CallbackQuery, bot: Bot) -> 
             logger.error(f"❌ Failed to send dismiss edit error: {answer_error}")
 
 async def handle_broadcast_target(callback_query: types.CallbackQuery) -> None:
-    # Handle broadcast target selection
     try:
         logger.info(f"📡 Broadcast target selection by {callback_query.from_user.full_name} ({callback_query.from_user.id})")
         
@@ -1011,11 +1073,9 @@ async def handle_broadcast_target(callback_query: types.CallbackQuery) -> None:
         except Exception as answer_error:
             logger.error(f"❌ Failed to send broadcast target error: {answer_error}")
 
-async def set_bot_commands(bot: Bot) -> None:
-    # Set bot commands menu
+async def set_bot_commands() -> None:
     try:
         logger.info("⚙️ Setting bot commands menu")
-        from aiogram.types import BotCommand
         
         commands = [
             BotCommand(command=cmd, description=desc)
@@ -1028,8 +1088,7 @@ async def set_bot_commands(bot: Bot) -> None:
     except Exception as e:
         logger.error(f"❌ Failed to set bot commands: {e}")
 
-async def periodic_cleanup(active_chats: Set[int]) -> None:
-    # Periodic cleanup task
+async def periodic_cleanup() -> None:
     logger.info("🧹 Starting periodic cleanup task")
     
     while True:
@@ -1054,8 +1113,7 @@ async def periodic_cleanup(active_chats: Set[int]) -> None:
             logger.error(f"❌ Periodic cleanup error: {e}")
             await asyncio.sleep(60)
 
-async def check_deleted_messages(active_chats: Set[int]) -> None:
-    # Check for deleted messages
+async def check_deleted_messages() -> None:
     logger.info("🔍 Starting deleted message checker task")
     
     while True:
@@ -1087,73 +1145,13 @@ async def check_deleted_messages(active_chats: Set[int]) -> None:
             logger.error(f"❌ Deletion check error: {e}")
             await asyncio.sleep(300)
 
-# Global bot components
-bot = None
-dp = None
-active_chats: Set[int] = set()
-edit_data_cache = {}
-
-def setup_handlers() -> None:
-    # Setup all handlers
-    logger.info("🔧 Setting up message handlers")
-    
-    dp.message(Command("start"))(handle_start_command)
-    dp.message(Command("help"))(handle_help_command)
-    dp.message(Command("ping"))(handle_ping_command)
-    dp.message(Command("broadcast"))(handle_broadcast_command)
-    dp.message(F.chat.type == "private")(handle_private_message_wrapper)
-    dp.message(F.content_type.in_({'text', 'photo', 'video', 'document', 'audio', 'voice', 'video_note', 'sticker', 'animation'}))(handle_message_wrapper)
-    dp.edited_message()(handle_edited_message_wrapper)
-    dp.message(F.content_type == 'new_chat_members')(handle_new_members_wrapper)
-    dp.callback_query()(handle_callback_query_wrapper)
-    
-    logger.info("✅ All message handlers configured successfully")
-
-async def handle_start_command(message: Message) -> None:
-    await start_command(message, bot)
-
-async def handle_help_command(message: Message) -> None:
-    await help_command(message)
-
-async def handle_ping_command(message: Message) -> None:
-    await ping_command(message, bot)
-
-async def handle_broadcast_command(message: Message) -> None:
-    await broadcast_command(message)
-
-async def handle_private_message_wrapper(message: Message) -> None:
-    await handle_private_message(message, bot)
-
-async def handle_message_wrapper(message: Message) -> None:
-    await handle_message(message)
-    if message.chat.type in ['group', 'supergroup']:
-        active_chats.add(message.chat.id)
-
-async def handle_edited_message_wrapper(edited_message: Message) -> None:
-    global edit_data_cache
-    # Store edit data cache in bot object for access
-    if not hasattr(bot, 'edit_data_cache'):
-        bot.edit_data_cache = edit_data_cache
-    await handle_edited_message(edited_message, bot)
-
-async def handle_new_members_wrapper(message: Message) -> None:
-    await handle_new_members(message, bot, active_chats)
-
-async def handle_callback_query_wrapper(callback_query: types.CallbackQuery) -> None:
-    global edit_data_cache
-    # Store edit data cache in bot object for access
-    if not hasattr(bot, 'edit_data_cache'):
-        bot.edit_data_cache = edit_data_cache
-    await handle_callback_query(callback_query, bot)
-
 async def start_bot_polling() -> None:
-    # Start bot polling
     try:
         logger.info("🚀 Starting Sus Ninja Bot polling...")
         bot_info = await bot.get_me()
         logger.info(f"✅ Bot @{bot_info.username} (ID: {bot_info.id}) is running successfully!")
         
-        await set_bot_commands(bot)
+        await set_bot_commands()
         logger.info("🎯 Starting polling loop...")
         await dp.start_polling(bot, skip_updates=True)
         
@@ -1162,7 +1160,6 @@ async def start_bot_polling() -> None:
         raise
 
 async def main():
-    # Main function
     global bot, dp
     logger.info("🚀 Starting main bot execution")
     
@@ -1183,13 +1180,10 @@ async def main():
         bot = Bot(token=BOT_TOKEN)
         dp = Dispatcher()
         
-        # Setup handlers
-        setup_handlers()
-        
         # Start background tasks
         logger.info("🔄 Starting background tasks")
-        asyncio.create_task(periodic_cleanup(active_chats))
-        asyncio.create_task(check_deleted_messages(active_chats))
+        asyncio.create_task(periodic_cleanup())
+        asyncio.create_task(check_deleted_messages())
         logger.info("✅ Background tasks started")
         
         logger.info("🎯 Starting bot polling...")
@@ -1215,7 +1209,6 @@ if __name__ == "__main__":
             else:
                 logger.info("🐧 Unix/Linux detected - applying performance optimizations")
                 try:
-                    import concurrent.futures
                     
                     loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
