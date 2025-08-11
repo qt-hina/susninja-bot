@@ -28,15 +28,11 @@ GROUP_URL = "https://t.me/SoulMeetsHQ"
 OWNER_ID = 5290407067
 PORT = int(os.environ.get("PORT", 10000))
 
-logger.info(f"🔧 Configuration loaded - Port: {PORT}, Owner ID: {OWNER_ID}")
-
 # Performance configurations
 MAX_MESSAGES_PER_CHAT = 1000
 MESSAGE_TTL = 3600
 CLEANUP_INTERVAL = 300
 MAX_MESSAGE_LENGTH = 4096
-
-logger.info(f"⚙️ Performance config - Max messages: {MAX_MESSAGES_PER_CHAT}, TTL: {MESSAGE_TTL}s, Cleanup: {CLEANUP_INTERVAL}s")
 
 # Bot data structures
 broadcast_mode = set()
@@ -49,8 +45,6 @@ messages: Dict[int, Dict[int, dict]] = defaultdict(dict)
 chat_queues: Dict[int, deque] = defaultdict(lambda: deque(maxlen=MAX_MESSAGES_PER_CHAT))
 recent_message_ids: Dict[int, Set[int]] = defaultdict(set)
 last_cleanup = time.time()
-
-logger.info("🗄️ Data structures initialized")
 
 # Bot messages
 WELCOME_MSG = """
@@ -112,8 +106,6 @@ BOT_COMMANDS = [
     ("start", "⚔️ Awaken Sus Ninja"),
     ("help", "🥷 Ninja Techniques")
 ]
-
-logger.info("📝 Bot messages and commands configured")
 
 # IMAGES LIST
 IMAGES = [
@@ -216,8 +208,20 @@ def setup_colored_logging():
 
     return logger
 
-# Initialize colored logger first
+# Initialize colored logger
 logger = setup_colored_logging()
+
+# Now log the configuration after logger is set up
+logger.info(f"🔧 Configuration loaded - Port: {PORT}, Owner ID: {OWNER_ID}")
+logger.info(f"⚙️ Performance config - Max messages: {MAX_MESSAGES_PER_CHAT}, TTL: {MESSAGE_TTL}s, Cleanup: {CLEANUP_INTERVAL}s")
+logger.info("🗄️ Data structures initialized")
+logger.info("📝 Bot messages and commands configured")
+
+# Global bot components
+bot = None
+dp = None
+active_chats: Set[int] = set()
+edit_data_cache = {}
 
 def extract_user_info(msg: Message) -> Dict[str, any]:
     """Extract user and chat information from message"""
@@ -428,12 +432,6 @@ def cleanup_expired() -> None:
             
     except Exception as e:
         logger.error(f"❌ Cleanup error: {e}")
-
-# Global bot components
-bot = None
-dp = None
-active_chats: Set[int] = set()
-edit_data_cache = {}
 
 # Handler functions
 @dp.message(Command("start"))
