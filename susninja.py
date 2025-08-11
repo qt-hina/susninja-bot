@@ -217,9 +217,9 @@ logger.info(f"⚙️ Performance config - Max messages: {MAX_MESSAGES_PER_CHAT},
 logger.info("🗄️ Data structures initialized")
 logger.info("📝 Bot messages and commands configured")
 
-# Global bot components
+# Initialize Bot and Dispatcher at module level
 bot = None
-dp = None
+dp = Dispatcher()  # Initialize dispatcher here!
 active_chats: Set[int] = set()
 edit_data_cache = {}
 
@@ -433,7 +433,7 @@ def cleanup_expired() -> None:
     except Exception as e:
         logger.error(f"❌ Cleanup error: {e}")
 
-# Handler functions
+# Handler functions with decorators - NOW dp is initialized!
 @dp.message(Command("start"))
 async def start_command(message: Message) -> None:
     try:
@@ -1158,7 +1158,7 @@ async def start_bot_polling() -> None:
         raise
 
 async def main():
-    global bot, dp
+    global bot
     logger.info("🚀 Starting main bot execution")
     
     if not BOT_TOKEN or BOT_TOKEN == "YOUR_BOT_TOKEN_HERE":
@@ -1173,10 +1173,9 @@ async def main():
         threading.Thread(target=start_dummy_server, daemon=True).start()
         logger.info("✅ HTTP server thread started successfully")
         
-        # Initialize bot components
-        logger.info("🔧 Initializing bot components")
+        # Initialize bot (dp is already initialized at module level)
+        logger.info("🔧 Initializing bot")
         bot = Bot(token=BOT_TOKEN)
-        dp = Dispatcher()
         
         # Start background tasks
         logger.info("🔄 Starting background tasks")
